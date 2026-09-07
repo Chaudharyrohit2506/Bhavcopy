@@ -1,20 +1,20 @@
-name: NSE Daily Market Intelligence — Data Refresh
+name: NSE Expert HTML — 8 AM Refresh
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "00 07 * * 1-5"
+    - cron: "00 08 * * 1-5"
       timezone: "Asia/Kolkata"
 
 permissions:
   contents: write
 
 concurrency:
-  group: nse-data-refresh
+  group: nse-html-refresh
   cancel-in-progress: false
 
 jobs:
-  refresh:
+  refresh_html:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,19 +26,13 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Validate latest data and refresh Expert HTML
+        run: python refresh_expert_html.py
 
-      - name: Download NSE 50 sessions
-        run: python download_nse_50_sessions.py
-
-      - name: Calculate market intelligence
-        run: python calculate_market_intelligence.py
-
-      - name: Commit refreshed data
+      - name: Commit refreshed HTML
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data
-          git diff --cached --quiet || git commit -m "Refresh NSE market intelligence data"
+          git add output/NSE_All_Share_Institutional_Terminal.html
+          git diff --cached --quiet || git commit -m "Refresh NSE expert HTML dashboard"
           git push
