@@ -80,6 +80,13 @@ footer{margin:28px 0 10px;color:#64748b;font-size:.7rem}
 @media(max-width:1000px){.expert-grid{grid-template-columns:1fr 1fr}.expert-main{grid-row:auto}.expert-wide{grid-column:1/-1}}
 @media(max-width:650px){.expert-grid,.assumption-grid{grid-template-columns:1fr}.expert-wide{grid-column:auto}}
 
+
+/* Click-to-sort tables */
+.sortable th{cursor:pointer;user-select:none;position:relative;padding-right:24px}
+.sortable th::after{content:"↕";position:absolute;right:8px;opacity:.45;font-size:.8em}
+.sortable th.sort-asc::after{content:"▲";opacity:1}
+.sortable th.sort-desc::after{content:"▼";opacity:1}
+.sortable th:hover{background:rgba(56,189,248,.08)}
 </style>
 </head>
 <body>
@@ -130,7 +137,7 @@ footer{margin:28px 0 10px;color:#64748b;font-size:.7rem}
 <div class="section">🚀 50-Stock High-RVOL Screen <span>Market cap > ₹300 Cr and < ₹31,000 Cr</span></div>
 <div class="card">
   <input id="rvolSearch" class="search" placeholder="Search stock or sector…" oninput="filterTable('rvolTable','rvolSearch')">
-  <div class="scroll"><table id="rvolTable"><thead><tr>
+  <div class="scroll"><table id="rvolTable" class="sortable"><thead><tr>
     <th>Stock Name</th><th>Weekly RVOL (% vs 20SMA)</th><th>Last 40D Movement</th><th>Current Price</th><th>Market Cap</th><th>Sector</th>
   </tr></thead><tbody></tbody></table></div>
 </div>
@@ -138,7 +145,7 @@ footer{margin:28px 0 10px;color:#64748b;font-size:.7rem}
 <div class="section">📋 Comprehensive 50-Day NSE Institutional Market Breadth Ledger <span>Exact 15-column structure</span></div>
 <div class="card">
   <input id="ledgerSearch" class="search" placeholder="Search date or metric…" oninput="filterTable('ledgerTable','ledgerSearch')">
-  <div class="scroll"><table id="ledgerTable"><thead><tr>
+  <div class="scroll"><table id="ledgerTable" class="sortable"><thead><tr>
     <th>Session Date</th><th>NSE Adv / Dec</th><th>A/D Ratio</th><th>TRIN (Arms)</th><th>Breakout Follow-Through (%)</th>
     <th>Large Cap Adv %</th><th>Mid Cap Adv %</th><th>Small Cap Adv %</th><th>Near 10% 52W High</th><th>India VIX</th>
     <th>Up / Down 4.5%</th><th>Up 20% (5d)</th><th>&gt; 20 EMA (%)</th><th>&gt; 50 EMA (%)</th><th>&gt; 200 EMA (%)</th>
@@ -212,6 +219,37 @@ function filterTable(id,inputId){
   document.querySelectorAll("#"+id+" tbody tr").forEach(r=>r.style.display=r.innerText.toLowerCase().includes(q)?"":"none");
 }
 
+function sortTable(tableId,colIndex){
+  const table=document.getElementById(tableId), tbody=table.tBodies[0];
+  const th=table.tHead.rows[0].cells[colIndex];
+  const asc=th.dataset.order!=="asc";
+  [...table.tHead.rows[0].cells].forEach(h=>{h.classList.remove("sort-asc","sort-desc");delete h.dataset.order});
+  th.dataset.order=asc?"asc":"desc";
+  th.classList.add(asc?"sort-asc":"sort-desc");
+  const rows=[...tbody.rows];
+  const value=(row)=>{
+    const raw=row.cells[colIndex]?.innerText.trim()||"";
+    const cleaned=raw.replace(/[₹,%+,−]/g,"").replace(/,/g,"").replace(/\s*\/\s*/g,"/");
+    const n=parseFloat(cleaned);
+    return Number.isNaN(n)?raw.toLowerCase():n;
+  };
+  rows.sort((a,b)=>{
+    const av=value(a),bv=value(b);
+    if(typeof av==="number" && typeof bv==="number") return asc?av-bv:bv-av;
+    return asc?String(av).localeCompare(String(bv),undefined,{numeric:true}):String(bv).localeCompare(String(av),undefined,{numeric:true});
+  });
+  rows.forEach(r=>tbody.appendChild(r));
+}
+
+function enableTableSorting(){
+  document.querySelectorAll("table.sortable").forEach(table=>{
+    [...table.tHead.rows[0].cells].forEach((th,i)=>{
+      th.addEventListener("click",()=>sortTable(table.id,i));
+      th.title="Click to sort";
+    });
+  });
+}
+
 function drawCharts(rows){
   const labels=rows.map(r=>r.session_date);
   const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{color:"#94a3b8",boxWidth:12,font:{size:10}}}},
@@ -240,66 +278,128 @@ function evidenceItem(text,type="good"){
   return `<div class="item"><span class="dot ${c}"></span>${text}</div>`;
 }
 function renderExpert(D){
-  const rows=D.sessions||[],r=rows[rows.length-1];
+  const rows=(D.sessions||[]).filter(Boolean), r=rows[rows.length-1];
   if(!r)return;
-  const ad=Number(r.ad_ratio),trin=Number(r.trin),vix=Number(r.india_vix);
-  const e20=Number(r.above_20_ema),e50=Number(r.above_50_ema),e200=Number(r.above_200_ema);
-  const large=Number(r.large_cap_adv_pct),mid=Number(r.mid_cap_adv_pct),small=Number(r.small_cap_adv_pct);
-  const near=Number(r.near_10pct_52w_high_pct),ft=Number(r.breakout_follow_through_pct);
-  const net=Number(r.advances)-Number(r.declines);
 
-  // Transparent rules-based score; deliberately capped so no single indicator dominates.
+  // EXPERT ENGINE: latest state + multi-horizon historical trend.
+  // The latest session is never allowed to dominate the conclusion by itself.
+  const num=(v)=>Number.isFinite(Number(v))?Number(v):null;
+  const series=(key)=>rows.map(x=>num(x[key])).filter(v=>v!==null);
+  const lastVal=(key)=>num(r[key]);
+  const avgN=(key,n)=>{const a=series(key).slice(-n);return avg(a)};
+  const deltaN=(key,n)=>{const a=series(key);if(a.length<n+1)return null;return a[a.length-1]-a[a.length-1-n]};
+  const slopeN=(key,n)=>{
+    const a=series(key).slice(-n); if(a.length<3)return null;
+    return trend(a);
+  };
+  const direction=(x,tol=0.01)=>x===null?"insufficient":x>tol?"improving":x<-tol?"deteriorating":"flat";
+  const fmtDelta=(x,unit="%")=>x===null?"N/V":`${x>=0?"+":""}${x.toFixed(1)}${unit}`;
+  const pct1=x=>x==null?"N/V":Number(x).toFixed(1)+"%";
+
+  const ad=lastVal("ad_ratio"), trin=lastVal("trin"), vix=lastVal("india_vix");
+  const e20=lastVal("above_20_ema"), e50=lastVal("above_50_ema"), e200=lastVal("above_200_ema");
+  const large=lastVal("large_cap_adv_pct"), mid=lastVal("mid_cap_adv_pct"), small=lastVal("small_cap_adv_pct");
+  const near=lastVal("near_10pct_52w_high_pct"), ft=lastVal("breakout_follow_through_pct");
+  const net=num(r.advances)-num(r.declines);
+
+  // Multi-horizon changes. These are descriptive trend evidence, not forecasts.
+  const ad5=deltaN("ad_ratio",5),ad10=deltaN("ad_ratio",10),ad20=deltaN("ad_ratio",20);
+  const tr5=deltaN("trin",5),tr10=deltaN("trin",10),tr20=deltaN("trin",20);
+  const e205=deltaN("above_20_ema",5),e2010=deltaN("above_20_ema",10),e2020=deltaN("above_20_ema",20);
+  const e505=deltaN("above_50_ema",5),e5010=deltaN("above_50_ema",10),e5020=deltaN("above_50_ema",20);
+  const e2005=deltaN("above_200_ema",5),e20010=deltaN("above_200_ema",10),e20020=deltaN("above_200_ema",20);
+  const ft5=deltaN("breakout_follow_through_pct",5),ft10=deltaN("breakout_follow_through_pct",10),ft20=deltaN("breakout_follow_through_pct",20);
+  const near5=deltaN("near_10pct_52w_high_pct",5),near10=deltaN("near_10pct_52w_high_pct",10),near20=deltaN("near_10pct_52w_high_pct",20);
+  const vix5=deltaN("india_vix",5),vix10=deltaN("india_vix",10),vix20=deltaN("india_vix",20);
+  const large5=deltaN("large_cap_adv_pct",5),mid5=deltaN("mid_cap_adv_pct",5),small5=deltaN("small_cap_adv_pct",5);
+
+  // A transparent baseline score is retained, but historical trend evidence can
+  // move it modestly. No single indicator or one-day print can dominate.
   let score=50;
-  if(Number.isFinite(ad))score+=ad>=1.25?12:ad>=1.05?7:ad>=.85?0:-10;
-  if(Number.isFinite(trin))score+=trin<.65?12:trin<.85?7:trin<=1.05?0:-9;
-  if(Number.isFinite(e20))score+=e20>=60?9:e20>=50?5:e20>=40?-2:-9;
-  if(Number.isFinite(e50))score+=e50>=60?7:e50>=50?3:e50>=40?-2:-7;
-  if(Number.isFinite(e200))score+=e200>=55?7:e200>=45?3:e200>=35?-2:-7;
-  if(Number.isFinite(ft))score+=ft>=60?8:ft>=50?4:ft>=40?0:-7;
-  if(Number.isFinite(near))score+=near>=30?5:near>=20?2:near<12?-5:0;
-  if(Number.isFinite(vix))score+=vix<11?-1:vix<14?3:vix<18?0:-7;
-  if(Number.isFinite(large)&&Number.isFinite(small)&&small-large>=15)score-=5;
-  score=Math.max(0,Math.min(100,Math.round(score)));
+  if(ad!==null)score+=ad>=1.25?12:ad>=1.05?7:ad>=.85?0:-10;
+  if(trin!==null)score+=trin<.65?12:trin<.85?7:trin<=1.05?0:-9;
+  if(e20!==null)score+=e20>=60?9:e20>=50?5:e20>=40?-2:-9;
+  if(e50!==null)score+=e50>=60?7:e50>=50?3:e50>=40?-2:-7;
+  if(e200!==null)score+=e200>=55?7:e200>=45?3:e200>=35?-2:-7;
+  if(ft!==null)score+=ft>=60?8:ft>=50?4:ft>=40?0:-7;
+  if(near!==null)score+=near>=30?5:near>=20?2:near<12?-5:0;
+  if(vix!==null)score+=vix<11?-1:vix<14?3:vix<18?0:-7;
 
-  const tAD=trend(lastN(rows,"ad_ratio",10)),t20=trend(lastN(rows,"above_20_ema",10)),tVIX=trend(lastN(rows,"india_vix",10));
+  // Historical trend adjustments. Positive breadth/participation trends help;
+  // rising TRIN/VIX and falling participation hurt. Keep total influence bounded.
+  let trendScore=0;
+  if(ad10!==null)trendScore += ad10>0.10?3:ad10<-0.10?-3:0;
+  if(ad20!==null)trendScore += ad20>0.15?2:ad20<-0.15?-2:0;
+  if(tr10!==null)trendScore += tr10<-0.08?3:tr10>0.08?-3:0;
+  if(e2010!==null)trendScore += e2010>2?2:e2010<-2?-2:0;
+  if(e5010!==null)trendScore += e5010>2?2:e5010<-2?-2:0;
+  if(e20010!==null)trendScore += e20010>1.5?2:e20010<-1.5?-2:0;
+  if(ft10!==null)trendScore += ft10>5?2:ft10<-5?-2:0;
+  if(near10!==null)trendScore += near10>3?2:near10<-3?-2:0;
+  if(vix10!==null)trendScore += vix10>1.5?-2:vix10<-1.5?1:0;
+  trendScore=Math.max(-14,Math.min(14,trendScore));
+  score=Math.max(0,Math.min(100,Math.round(score+trendScore)));
+
+  const tAD=slopeN("ad_ratio",10),t20=slopeN("above_20_ema",10),t50=slopeN("above_50_ema",10);
+  const t200=slopeN("above_200_ema",10),tVIX=slopeN("india_vix",10),tFT=slopeN("breakout_follow_through_pct",10);
+  const improvingCount=[ad10, -tr10, e2010,e5010,e20010,ft10,near10,-vix10].filter(x=>x!==null&&x>0).length;
+  const deterioratingCount=[ad10, -tr10, e2010,e5010,e20010,ft10,near10,-vix10].filter(x=>x!==null&&x<0).length;
+
   let regime="NEUTRAL / SELECTIVE";
-  if(score>=72)regime="BULLISH — BROAD CONFIRMATION";
+  if(score>=74)regime="BULLISH — BROAD CONFIRMATION";
   else if(score>=60)regime="BULLISH BIAS — SELECTIVE";
-  else if(score<=38)regime="DEFENSIVE — RISK ELEVATED";
+  else if(score<=36)regime="DEFENSIVE — RISK ELEVATED";
   else if(score<=48)regime="CAUTIOUS / MIXED";
 
-  let verdict="The tape is constructive, but the evidence does not justify an unconditional risk-on call.";
-  if(score>=72)verdict="The breadth stack is strongly constructive: participation, volume pressure and trend confirmation are aligned.";
-  else if(score>=60)verdict="The market has a bullish bias, but leadership quality and breadth confirmation should be monitored rather than assumed.";
-  else if(score<=38)verdict="The market is showing defensive internals; rallies should be treated cautiously until breadth and trend participation improve.";
-  else if(score<=48)verdict="The evidence is mixed. Capital should favour confirmed leaders rather than broad market exposure.";
+  const trendLabel=improvingCount>=6?"broadly improving":deterioratingCount>=6?"broadly deteriorating":"mixed / rotational";
+  let verdict;
+  if(score>=74)verdict=`The latest tape is constructive and the historical breadth trend is ${trendLabel}. Multiple participation and confirmation measures are aligned; this supports selective risk-on positioning, not indiscriminate chasing.`;
+  else if(score>=60)verdict=`The market has a bullish bias, but the historical internal trend is ${trendLabel}. Leadership quality and confirmation matter more than the latest headline breadth print.`;
+  else if(score<=36)verdict=`Internals are defensive and the historical trend is ${trendLabel}. Rallies should be treated as tactical until breadth, participation and confirmation improve together.`;
+  else if(score<=48)verdict=`The evidence is mixed and the historical trend is ${trendLabel}. The better approach is to favour confirmed leaders and avoid assuming that a single strong/weak session defines the regime.`;
+  else verdict=`The market is balanced but selective: current conditions and the historical trend are not sufficiently aligned for a high-conviction broad-market call.`;
 
   const supports=[],contradictions=[],risks=[];
-  if(ad>1)supports.push(evidenceItem(`Breadth is positive: ${r.advances.toLocaleString()} advances versus ${r.declines.toLocaleString()} declines (A/D ${ad.toFixed(2)}).`));
-  if(trin<1)supports.push(evidenceItem(`TRIN ${trin.toFixed(2)} shows a favourable volume skew behind advancing issues.`));
-  if(e20>50)supports.push(evidenceItem(`${pct1(e20)} of the available universe is above the 20 EMA, providing short-term participation support.`));
-  if(Number.isFinite(ft)&&ft>=50)supports.push(evidenceItem(`Breakout follow-through is ${ft.toFixed(1)}%, so at least half of qualifying T-day HIGH breakouts also closed above their breakout level.`));
-  if(near>=25)supports.push(evidenceItem(`${near.toFixed(1)}% of the universe is within 10% of its 52-week closing high, indicating a sizeable leadership reservoir.`));
-  if(!supports.length)supports.push(evidenceItem("No major bullish confirmation passes the current thresholds.","warn"));
+  if(ad>1)supports.push(evidenceItem(`Current breadth is positive: ${num(r.advances)?.toLocaleString()} advances versus ${num(r.declines)?.toLocaleString()} declines (A/D ${ad.toFixed(2)}).`));
+  if(ad10!==null&&ad10>0)supports.push(evidenceItem(`A/D ratio has improved ${fmtDelta(ad10)} over 10 sessions; this is stronger evidence than the latest print alone.`));
+  if(trin!==null&&trin<1)supports.push(evidenceItem(`TRIN ${trin.toFixed(2)} shows favourable volume breadth; its 10-session change is ${fmtDelta(tr10)}.`));
+  if(e20>50)supports.push(evidenceItem(`${pct1(e20)} is above the 20 EMA, providing short-term participation support; 10-session change is ${fmtDelta(e2010)}.`));
+  if(e50!==null&&e50>50&&e5010!==null&&e5010>0)supports.push(evidenceItem(`50-EMA participation is ${pct1(e50)} and improving ${fmtDelta(e5010)} over 10 sessions, strengthening intermediate confirmation.`));
+  if(e200!==null&&e200>=45&&e20010!==null&&e20010>=0)supports.push(evidenceItem(`Longer-term participation is ${pct1(e200)} above the 200 EMA with a ${fmtDelta(e20010)} 10-session change.`));
+  if(ft!==null&&ft>=50&&ft10!==null&&ft10>=0)supports.push(evidenceItem(`Breakout follow-through is ${ft.toFixed(1)}% and has improved ${fmtDelta(ft10)} over 10 sessions.`));
+  if(near!==null&&near>=25&&near10!==null&&near10>=0)supports.push(evidenceItem(`${near.toFixed(1)}% of the universe is within 10% of its 52-week closing high and this has improved ${fmtDelta(near10)} over 10 sessions.`));
+  if(!supports.length)supports.push(evidenceItem("No major bullish confirmation passes the current and historical evidence tests.","warn"));
 
-  if(large<50)contradictions.push(evidenceItem(`Large-cap breadth is ${pct1(large)}, below 50%; this reduces the quality of the bullish signal.`,"warn"));
-  if(small-large>=15)contradictions.push(evidenceItem(`Small-cap participation (${pct1(small)}) is materially stronger than large caps (${pct1(large)}), implying narrower / higher-beta leadership.`,"warn"));
-  if(e200<50)contradictions.push(evidenceItem(`Only ${pct1(e200)} is above the 200 EMA; long-term participation is not broadly confirmed.`,"warn"));
-  if(tAD<0)contradictions.push(evidenceItem("Recent A/D trend is weakening; a positive one-day breadth reading should not be extrapolated indefinitely.","warn"));
-  if(Number.isFinite(ft)&&ft<50)contradictions.push(evidenceItem(`Breakout follow-through is ${ft.toFixed(1)}%, below the 50% confirmation line.`,"warn"));
+  if(large!==null&&large<50)contradictions.push(evidenceItem(`Large-cap breadth is ${pct1(large)}, below 50%; this reduces the quality of any broad bullish signal.`,"warn"));
+  if(small!==null&&large!==null&&small-large>=15)contradictions.push(evidenceItem(`Small-cap participation (${pct1(small)}) is materially stronger than large caps (${pct1(large)}), implying narrower / higher-beta leadership.`,"warn"));
+  if(e200!==null&&e200<50)contradictions.push(evidenceItem(`Only ${pct1(e200)} is above the 200 EMA; long-term participation is not broadly confirmed.`,"warn"));
+  if(ad10!==null&&ad10<0)contradictions.push(evidenceItem(`A/D has weakened ${Math.abs(ad10).toFixed(2)} over 10 sessions despite the latest reading; today's positive breadth should not be extrapolated.`,"warn"));
+  if(tr10!==null&&tr10>0)contradictions.push(evidenceItem(`TRIN has risen ${tr10.toFixed(2)} over 10 sessions, a warning that the volume quality behind advances is deteriorating.`,"warn"));
+  if(ft!==null&&ft<50)contradictions.push(evidenceItem(`Breakout follow-through is ${ft.toFixed(1)}%, below the 50% confirmation line.`,"warn"));
+  if(ft10!==null&&ft10<0)contradictions.push(evidenceItem(`Breakout follow-through has deteriorated ${Math.abs(ft10).toFixed(1)} percentage points over 10 sessions.`,"warn"));
+  if(e2010!==null&&e5010!==null&&e2010>2&&e5010<0)contradictions.push(evidenceItem("Short-term participation is improving while 50-EMA participation is weakening: a possible tactical bounce rather than broad trend repair.","warn"));
   if(!contradictions.length)contradictions.push(evidenceItem("No major contradiction crossed the current warning thresholds."));
 
-  if(vix<11)risks.push(evidenceItem(`India VIX is very low at ${vix.toFixed(2)}. This supports risk appetite but can also indicate complacency.`,"risk"));
-  if(tVIX>0)risks.push(evidenceItem("Recent VIX trend is rising; a continued rise would weaken the risk-on interpretation.","risk"));
-  if(t20<0)risks.push(evidenceItem("20-EMA participation is deteriorating over the recent window; watch for a breadth rollover.","risk"));
-  if(large<45)risks.push(evidenceItem("Large-cap participation is weak enough to demand confirmation before increasing broad exposure.","risk"));
-  if(!risks.length)risks.push(evidenceItem("No immediate high-severity risk threshold is active; normal event/gap risk remains."));
+  if(vix!==null&&vix<11)risks.push(evidenceItem(`India VIX is very low at ${vix.toFixed(2)}; supportive for risk appetite but potentially consistent with complacency.`,"risk"));
+  if(vix10!==null&&vix10>1)risks.push(evidenceItem(`VIX has risen ${vix10.toFixed(2)} over 10 sessions; sustained volatility expansion would weaken the risk-on interpretation.`,"risk"));
+  if(e2020!==null&&e2020< -3)risks.push(evidenceItem(`20-EMA participation has fallen ${Math.abs(e2020).toFixed(1)} points over 20 sessions; watch for a broader breadth rollover.`,"risk"));
+  if(e5020!==null&&e5020< -3)risks.push(evidenceItem(`50-EMA participation has fallen ${Math.abs(e5020).toFixed(1)} points over 20 sessions, signalling intermediate deterioration.`,"risk"));
+  if(large!==null&&large<45)risks.push(evidenceItem("Large-cap participation is weak enough to demand confirmation before increasing broad exposure.","risk"));
+  if(near20!==null&&near20< -4)risks.push(evidenceItem(`Near-52W-high participation has contracted ${Math.abs(near20).toFixed(1)} points over 20 sessions; leadership breadth is narrowing.`,"risk"));
+  if(!risks.length)risks.push(evidenceItem("No immediate high-severity risk threshold is active; normal event, gap and liquidity risk remain."));
+
+  // Sector concentration context from the newly defined metrics.
+  const s27=(D.sector_27pct_return_ranking||[]).slice().sort((a,b)=>Number(b.return_27pct_penetration||0)-Number(a.return_27pct_penetration||0));
+  const s55=(D.sector_55d_high_ranking||D.sector_55d_high_penetration||[]).slice().sort((a,b)=>Number(b.penetration_pct||0)-Number(a.penetration_pct||0));
+  const top27=s27[0],top55=s55[0];
+  if(top27&&Number.isFinite(Number(top27.return_27pct_penetration)))supports.push(evidenceItem(`Strongest 27% return concentration: ${top27.sector||"Sector"} at ${Number(top27.return_27pct_penetration).toFixed(1)}%; this identifies established 40-session momentum concentration, not a sector-index return.`));
+  if(top55&&Number.isFinite(Number(top55.penetration_pct)))supports.push(evidenceItem(`Strongest 55-day high-zone penetration: ${top55.sector||"Sector"} at ${Number(top55.penetration_pct).toFixed(1)}% using the 97% relaxed HIGH threshold.`));
 
   document.getElementById("expertRegime").textContent=regime;
   document.getElementById("expertScore").textContent=`${score}/100`;
   document.getElementById("expertVerdict").textContent=verdict;
   document.getElementById("expertSub").textContent=
-    `Latest ${r.session_date}. Net breadth ${net>=0?"+":""}${net.toLocaleString()} • VIX ${Number.isFinite(vix)?vix.toFixed(2):"N/V"} • 20/50/200 EMA participation ${pct1(e20)} / ${pct1(e50)} / ${pct1(e200)}.`;
+    `Latest ${r.session_date}. Historical lens: 5D / 10D / 20D changes are ${fmtDelta(ad5)} / ${fmtDelta(ad10)} / ${fmtDelta(ad20)} for A/D; 20 EMA ${fmtDelta(e205)} / ${fmtDelta(e2010)} / ${fmtDelta(e2020)}; 50 EMA ${fmtDelta(e505)} / ${fmtDelta(e5010)} / ${fmtDelta(e5020)}. Trend state: ${trendLabel}. Net breadth ${net>=0?"+":""}${Number.isFinite(net)?net.toLocaleString():"N/V"} • VIX ${vix!==null?vix.toFixed(2):"N/V"}.`;
   document.getElementById("expertSupports").innerHTML=supports.join("");
   document.getElementById("expertContradictions").innerHTML=contradictions.join("");
   document.getElementById("expertRisks").innerHTML=risks.join("");
@@ -309,11 +409,14 @@ function renderExpert(D){
     : score>=50
     ? "<b>Tactical stance:</b> stay selectively long / balanced. Prefer confirmed leaders near constructive moving averages and demand evidence on breakouts; keep position sizing disciplined."
     : "<b>Tactical stance:</b> defensive / selective. Prefer cash, hedged exposure or only the strongest confirmed leaders until breadth and trend participation improve.";
-  document.getElementById("expertConclusion").innerHTML=stance+
-    "<br><br><b>Critical interpretation:</b> this is a breadth-and-internals assessment, not an index-target forecast. "+
-    "A/D, TRIN, EMA breadth, VIX, 52W proximity and breakout follow-through measure different dimensions and do not establish causality. "+
-    "Low VIX can coexist with complacency; small-cap strength can inflate headline breadth; and strong EMA participation can persist during a vulnerable rotation. "+
-    "The highest-confidence conclusion is therefore the <i>quality and breadth of participation</i>, not the direction of tomorrow's price.";
+
+  const historical=`<b>Historical decision check:</b> The conclusion uses the latest session together with 5-, 10- and 20-session changes across breadth, EMA participation, breakout confirmation, 52W-high proximity and volatility. The 50-session ledger is treated as the context window; a one-day reversal is not treated as a regime change unless the surrounding trend confirms it. Current trend slopes are ${direction(tAD)} for A/D, ${direction(t20)} for 20-EMA breadth, ${direction(t50)} for 50-EMA breadth, ${direction(t200)} for 200-EMA breadth and ${direction(tFT,0.05)} for breakout follow-through.`;
+
+  document.getElementById("expertConclusion").innerHTML=
+    stance+"<br><br>"+historical+
+    "<br><br><b>Critical interpretation:</b> breadth is a multi-dimensional internal condition, not an index-target forecast. A/D measures participation, TRIN adds volume quality, EMA breadth measures trend participation, 52W proximity measures leadership reservoir, breakout follow-through measures immediate confirmation, and VIX measures volatility context. These signals can disagree and the disagreement is itself information. "+
+    "The sector metrics are concentration measures: the 27% Return Percentage shows how widely strong 40-session momentum is distributed within sectors, while 55-Day High Penetration shows how many stocks are at least 97% of their prior 55-session HIGH. Neither should be confused with a sector-index return. "+
+    "The highest-confidence conclusion is therefore the direction and quality of internal participation, supported by its historical trajectory—not the direction of the next day's index move.";
 }
 
 function render(D){
@@ -346,6 +449,7 @@ function render(D){
     <td>₹${Number(x.market_cap_cr||0).toLocaleString("en-IN",{maximumFractionDigits:0})} Cr</td><td>${esc(x.sector)}</td>
   </tr>`).join("") || `<tr><td colspan="6">N/V</td></tr>`;
 
+  enableTableSorting();
   drawCharts(rows);
 }
 
@@ -362,6 +466,5 @@ async function load(){
 }
 load();
 </script>
-<!-- NSE_HTML_REFRESH: generated 2026-09-07 15:13:58 IST | latest verified session 2026-09-04 | 50-session coverage validated -->
 </body>
 </html>
