@@ -1022,7 +1022,18 @@
       "near_10pct_52w_high_pct": 30.76,
       "india_vix": null,
       "breakout_follow_through_pct": 51.48,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 10.16,
+        "Financials": -1.95,
+        "Consumer": 12.29,
+        "Information Technology": 13.16,
+        "Media": 7.61,
+        "Materials": 6.67,
+        "Healthcare": 1.89,
+        "Realty": 12.0,
+        "Telecom": 0.6,
+        "Services": 8.23
+      },
       "sector_55d_high_penetration": {}
     },
     {
@@ -1047,7 +1058,18 @@
       "near_10pct_52w_high_pct": 30.58,
       "india_vix": null,
       "breakout_follow_through_pct": 51.35,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 10.34,
+        "Financials": -1.72,
+        "Consumer": 12.04,
+        "Information Technology": 17.01,
+        "Media": 8.9,
+        "Materials": 6.81,
+        "Healthcare": 2.84,
+        "Realty": 10.64,
+        "Telecom": 2.67,
+        "Services": 7.72
+      },
       "sector_55d_high_penetration": {}
     },
     {
@@ -1072,7 +1094,18 @@
       "near_10pct_52w_high_pct": 30.64,
       "india_vix": null,
       "breakout_follow_through_pct": 51.76,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 8.28,
+        "Financials": -1.58,
+        "Consumer": 10.98,
+        "Information Technology": 17.65,
+        "Media": 6.76,
+        "Materials": 9.25,
+        "Healthcare": 3.27,
+        "Realty": 5.92,
+        "Telecom": 1.52,
+        "Services": 5.19
+      },
       "sector_55d_high_penetration": {}
     },
     {
@@ -1097,7 +1130,18 @@
       "near_10pct_52w_high_pct": 29.83,
       "india_vix": null,
       "breakout_follow_through_pct": 51.58,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 6.55,
+        "Financials": -1.62,
+        "Consumer": 10.2,
+        "Information Technology": 12.08,
+        "Media": 5.1,
+        "Materials": 7.37,
+        "Healthcare": 3.45,
+        "Realty": 4.35,
+        "Telecom": 3.26,
+        "Services": 4.35
+      },
       "sector_55d_high_penetration": {}
     },
     {
@@ -1122,7 +1166,18 @@
       "near_10pct_52w_high_pct": 30.86,
       "india_vix": null,
       "breakout_follow_through_pct": 51.47,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 6.91,
+        "Financials": -1.69,
+        "Consumer": 10.08,
+        "Information Technology": 14.0,
+        "Media": 5.99,
+        "Materials": 7.36,
+        "Healthcare": 2.17,
+        "Realty": 2.03,
+        "Telecom": 3.18,
+        "Services": 4.11
+      },
       "sector_55d_high_penetration": {}
     },
     {
@@ -1147,7 +1202,18 @@
       "near_10pct_52w_high_pct": 29.8,
       "india_vix": null,
       "breakout_follow_through_pct": 51.14,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 5.44,
+        "Financials": -1.2,
+        "Consumer": 8.17,
+        "Information Technology": 14.35,
+        "Media": 3.97,
+        "Materials": 3.71,
+        "Healthcare": 2.79,
+        "Realty": -0.31,
+        "Telecom": 1.85,
+        "Services": 4.18
+      },
       "sector_55d_high_penetration": {}
     },
     {
@@ -1172,7 +1238,18 @@
       "near_10pct_52w_high_pct": 29.17,
       "india_vix": null,
       "breakout_follow_through_pct": 50.97,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 4.2,
+        "Financials": -1.92,
+        "Consumer": 5.72,
+        "Information Technology": 12.73,
+        "Media": 5.02,
+        "Materials": 4.82,
+        "Healthcare": 1.99,
+        "Realty": -0.15,
+        "Telecom": 1.16,
+        "Services": 3.41
+      },
       "sector_55d_high_penetration": {}
     },
     {
@@ -1197,7 +1274,18 @@
       "near_10pct_52w_high_pct": 28.2,
       "india_vix": null,
       "breakout_follow_through_pct": 50.96,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 4.67,
+        "Financials": 0.05,
+        "Consumer": 6.8,
+        "Information Technology": 12.87,
+        "Media": 5.62,
+        "Materials": 5.52,
+        "Healthcare": 2.99,
+        "Realty": 1.96,
+        "Telecom": 2.57,
+        "Services": 4.4
+      },
       "sector_55d_high_penetration": {}
     },
     {
@@ -1222,7 +1310,18 @@
       "near_10pct_52w_high_pct": 30.27,
       "india_vix": null,
       "breakout_follow_through_pct": null,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 4.35,
+        "Financials": -0.05,
+        "Consumer": 4.8,
+        "Information Technology": 12.26,
+        "Media": 5.26,
+        "Materials": 5.38,
+        "Healthcare": 1.5,
+        "Realty": 1.01,
+        "Telecom": 0.27,
+        "Services": 2.59
+      },
       "sector_55d_high_penetration": {}
     },
     {
@@ -1247,7 +1346,18 @@
       "near_10pct_52w_high_pct": 31.04,
       "india_vix": null,
       "breakout_follow_through_pct": null,
-      "sector_40d_returns": {},
+      "sector_40d_returns": {
+        "Automobile": 3.17,
+        "Financials": -0.92,
+        "Consumer": 3.34,
+        "Information Technology": 9.58,
+        "Media": 5.47,
+        "Materials": 4.95,
+        "Healthcare": 0.43,
+        "Realty": -3.27,
+        "Telecom": 1.46,
+        "Services": 2.29
+      },
       "sector_55d_high_penetration": {
         "Automobile": 2.63,
         "Consumer": 2.74,
@@ -1288,7 +1398,18 @@
     "near_10pct_52w_high_pct": 31.04,
     "india_vix": null,
     "breakout_follow_through_pct": null,
-    "sector_40d_returns": {},
+    "sector_40d_returns": {
+      "Automobile": 3.17,
+      "Financials": -0.92,
+      "Consumer": 3.34,
+      "Information Technology": 9.58,
+      "Media": 5.47,
+      "Materials": 4.95,
+      "Healthcare": 0.43,
+      "Realty": -3.27,
+      "Telecom": 1.46,
+      "Services": 2.29
+    },
     "sector_55d_high_penetration": {
       "Automobile": 2.63,
       "Consumer": 2.74,
@@ -1708,7 +1829,48 @@
       "sector": "Industrials"
     }
   ],
-  "sector_40d_ranking": [],
+  "sector_40d_ranking": [
+    {
+      "sector": "Information Technology",
+      "return_40d_pct": 9.58
+    },
+    {
+      "sector": "Media",
+      "return_40d_pct": 5.47
+    },
+    {
+      "sector": "Materials",
+      "return_40d_pct": 4.95
+    },
+    {
+      "sector": "Consumer",
+      "return_40d_pct": 3.34
+    },
+    {
+      "sector": "Automobile",
+      "return_40d_pct": 3.17
+    },
+    {
+      "sector": "Services",
+      "return_40d_pct": 2.29
+    },
+    {
+      "sector": "Telecom",
+      "return_40d_pct": 1.46
+    },
+    {
+      "sector": "Healthcare",
+      "return_40d_pct": 0.43
+    },
+    {
+      "sector": "Financials",
+      "return_40d_pct": -0.92
+    },
+    {
+      "sector": "Realty",
+      "return_40d_pct": -3.27
+    }
+  ],
   "sector_55d_high_ranking": [
     {
       "sector": "Textiles",
@@ -1770,7 +1932,7 @@
   "data_coverage": {
     "raw_sessions": 50,
     "mcap_files": 50,
-    "index_files": 0,
+    "index_files": 50,
     "vix_rows": 0,
     "nifty500_sector_map": true
   }
