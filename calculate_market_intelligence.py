@@ -1,671 +1,185 @@
-import glob
-import os
-import json
-import numpy as np
-import pandas as pd
-
-RAW = "data/raw"
-OUT = "data/market_intelligence.json"
-
-
-def normalise_columns(df):
-    df.columns = [
-        str(c).replace("\ufeff", "").strip().upper()
-        for c in df.columns
-    ]
-    return df
-
-
-def first_existing(df, names):
-    for name in names:
-        if name in df.columns:
-            return name
-    return None
-
-
-def read_file(path):
-    try:
-        df = pd.read_csv(
-            path,
-            low_memory=False,
-            encoding="utf-8-sig"
-        )
-    except Exception as e:
-        print("READ ERROR:", path, str(e))
-        return None
-
-    df = normalise_columns(df)
-
-    # NSE legacy/full bhavcopy + current/UDiFF aliases
-    symbol_col = first_existing(df, [
-        "SYMBOL",
-        "TCKRSYMB",
-        "SECURITY",
-        "FININSTRMNT"
-    ])
-
-    series_col = first_existing(df, [
-        "SERIES",
-        "SCTYSRS",
-        "SCTY_SERIES"
-    ])
-
-    close_col = first_existing(df, [
-        "CLOSE_PRICE",
-        "CLOSE",
-        "CLSPRIC",
-        "PRICCLSGPRIC",
-        "LAST_PRICE"
-    ])
-
-    prev_col = first_existing(df, [
-        "PREV_CLOSE",
-        "PRV_CLPR",
-        "PRVSCLSGPRIC"
-    ])
-
-    volume_col = first_existing(df, [
-        "TTL_TRD_QNTY",
-        "TOTTRDQTY",
-        "TOTALTRADGVOLUME",
-        "VOLUME",
-        "TtlTradgVol"
-    ])
-
-    open_col = first_existing(df, [
-        "OPEN_PRICE",
-        "OPEN",
-        "OPNPRIC"
-    ])
-
-    high_col = first_existing(df, [
-        "HIGH_PRICE",
-        "HIGH",
-        "HGHPRIC"
-    ])
-
-    low_col = first_existing(df, [
-        "LOW_PRICE",
-        "LOW",
-        "LWPRIC"
-    ])
-
-    if symbol_col is None or close_col is None:
-        print(
-            "SKIP INVALID:",
-            os.path.basename(path),
-            "columns:",
-            list(df.columns)[:25]
-        )
-        return None
-
-    out = pd.DataFrame()
-
-    out["SYMBOL"] = (
-        df[symbol_col]
-        .astype(str)
-        .str.strip()
-    )
-
-    out["CLOSE"] = pd.to_numeric(
-        df[close_col],
-        errors="coerce"
-    )
-
-    if prev_col:
-        out["PREV_CLOSE"] = pd.to_numeric(
-            df[prev_col],
-            errors="coerce"
-        )
-    else:
-        out["PREV_CLOSE"] = np.nan
-
-    if volume_col:
-        out["VOLUME"] = pd.to_numeric(
-            df[volume_col],
-            errors="coerce"
-        )
-    else:
-        out["VOLUME"] = 0
-
-    if open_col:
-        out["OPEN"] = pd.to_numeric(
-            df[open_col],
-            errors="coerce"
-        )
-
-    if high_col:
-        out["HIGH"] = pd.to_numeric(
-            df[high_col],
-            errors="coerce"
-        )
-
-    if low_col:
-        out["LOW"] = pd.to_numeric(
-            df[low_col],
-            errors="coerce"
-        )
-
-    if series_col:
-        out["SERIES"] = (
-            df[series_col]
-            .astype(str)
-            .str.strip()
-            .str.upper()
-        )
-
-        out = out[
-            out["SERIES"].isin(["EQ", "BE", "BZ"])
-        ].copy()
-
-    out = out[
-        out["SYMBOL"].notna()
-        & (out["SYMBOL"] != "")
-        & out["CLOSE"].notna()
-    ].copy()
-
-    if len(out) == 0:
-        print(
-            "SKIP EMPTY AFTER CLEANING:",
-            os.path.basename(path)
-        )
-        return None
-
-    return out
-
-
-# ---------------------------------------------------------
-# LOAD ALL NSE RAW FILES
-# ---------------------------------------------------------
-
-files = sorted(
-    glob.glob(os.path.join(RAW, "*.csv"))
-)
-
-print("Raw CSV files found:", len(files))
-
-if not files:
-    raise SystemExit(
-        "No NSE raw CSV files found in data/raw"
-    )
-
-frames = []
-
-for path in files:
-    x = read_file(path)
-
-    if x is not None and len(x):
-        filename = os.path.basename(path)
-
-        # Expected filename: YYYY-MM-DD.csv
-        try:
-            session_date = pd.to_datetime(
-                filename[:10]
-            )
-        except Exception:
-            print(
-                "DATE ERROR:",
-                filename
-            )
-            continue
-
-        x["DATE"] = session_date
-        frames.append(x)
-
-print("Valid NSE files:", len(frames))
-
-if not frames:
-    raise SystemExit(
-        "No valid NSE raw files found after parsing"
-    )
-
-
-allx = pd.concat(
-    frames,
-    ignore_index=True
-)
-
-allx = allx.sort_values(
-    ["DATE", "SYMBOL"]
-)
-
-# Remove accidental duplicate symbol/date rows
-allx = allx.drop_duplicates(
-    subset=["DATE", "SYMBOL"],
-    keep="last"
-)
-
-session_dates = sorted(
-    allx["DATE"].dropna().unique()
-)
-
-if len(session_dates) < 50:
-    raise SystemExit(
-        f"Only {len(session_dates)} valid NSE sessions found; "
-        "50 completed sessions are required."
-    )
-
-dates = session_dates[-50:]
-
-print(
-    "Using 50 sessions:",
-    pd.Timestamp(dates[0]).date(),
-    "to",
-    pd.Timestamp(dates[-1]).date()
-)
-
-
-# ---------------------------------------------------------
-# PREPARE DAILY DATA
-# ---------------------------------------------------------
-
-daily = {}
-
-for d in dates:
-    daily[d] = (
-        allx[allx["DATE"] == d]
-        .copy()
-    )
-
-
-# ---------------------------------------------------------
-# CALCULATE MARKET INTELLIGENCE
-# ---------------------------------------------------------
-
-rows = []
-
-for i, d in enumerate(dates):
-
-    cur = daily[d].copy()
-
-    # Previous actual NSE session
-    if i > 0:
-        previous_date = dates[i - 1]
-        previous = daily[previous_date][
-            ["SYMBOL", "CLOSE", "VOLUME"]
-        ].copy()
-
-        previous = previous.rename(
-            columns={
-                "CLOSE": "PCLOSE",
-                "VOLUME": "PVOL"
-            }
-        )
-
-        cur = cur.merge(
-            previous,
-            on="SYMBOL",
-            how="left"
-        )
-
-    else:
-        cur["PCLOSE"] = cur["PREV_CLOSE"]
-        cur["PVOL"] = np.nan
-
-    # Prefer actual previous-session close.
-    # Fall back to NSE PREV_CLOSE where necessary.
-    cur["BASE_CLOSE"] = cur["PCLOSE"]
-
-    cur.loc[
-        cur["BASE_CLOSE"].isna(),
-        "BASE_CLOSE"
-    ] = cur.loc[
-        cur["BASE_CLOSE"].isna(),
-        "PREV_CLOSE"
-    ]
-
-    ret = (
-        cur["CLOSE"] /
-        cur["BASE_CLOSE"] -
-        1
-    )
-
-    valid_ret = ret.replace(
-        [np.inf, -np.inf],
-        np.nan
-    ).notna()
-
-    adv = int(
-        (ret[valid_ret] > 0).sum()
-    )
-
-    dec = int(
-        (ret[valid_ret] < 0).sum()
-    )
-
-    unchanged = int(
-        (ret[valid_ret] == 0).sum()
-    )
-
-    # -----------------------------------------------------
-    # A/D RATIO
-    # -----------------------------------------------------
-
-    ad_ratio = (
-        adv / dec
-        if dec > 0
-        else np.nan
-    )
-
-    # -----------------------------------------------------
-    # TRIN / ARMS
-    # -----------------------------------------------------
-
-    up_volume = cur.loc[
-        ret > 0,
-        "VOLUME"
-    ].fillna(0).sum()
-
-    down_volume = cur.loc[
-        ret < 0,
-        "VOLUME"
-    ].fillna(0).sum()
-
-    if (
-        adv > 0
-        and dec > 0
-        and up_volume > 0
-        and down_volume > 0
-    ):
-        trin = (
-            (adv / dec) /
-            (up_volume / down_volume)
-        )
-    else:
-        trin = np.nan
-
-    # -----------------------------------------------------
-    # +/- 4.5% MOVERS
-    # -----------------------------------------------------
-
-    up45 = int(
-        (ret >= 0.045).sum()
-    )
-
-    down45 = int(
-        (ret <= -0.045).sum()
-    )
-
-    # -----------------------------------------------------
-    # 5-SESSION +20%
-    # -----------------------------------------------------
-
-    if i >= 5:
-
-        date5 = dates[i - 5]
-
-        old5 = daily[date5][
-            ["SYMBOL", "CLOSE"]
-        ].rename(
-            columns={
-                "CLOSE": "CLOSE_5D"
-            }
-        )
-
-        temp = cur[
-            ["SYMBOL", "CLOSE"]
-        ].merge(
-            old5,
-            on="SYMBOL",
-            how="left"
-        )
-
-        r5 = (
-            temp["CLOSE"] /
-            temp["CLOSE_5D"] -
-            1
-        )
-
-        up20 = int(
-            (r5 >= 0.20).sum()
-        )
-
-    else:
-        up20 = 0
-
-    # -----------------------------------------------------
-    # EMA BREADTH
-    # -----------------------------------------------------
-
-    history = allx[
-        allx["DATE"] <= d
-    ].copy()
-
-    ema20_count = 0
-    ema50_count = 0
-    ema200_count = 0
-
-    ema_universe = 0
-
-    for symbol, group in history.groupby(
-        "SYMBOL"
-    ):
-
-        series = (
-            group
-            .sort_values("DATE")["CLOSE"]
-            .dropna()
-        )
-
-        if len(series) < 20:
-            continue
-
-        price = float(
-            series.iloc[-1]
-        )
-
-        ema20 = (
-            series
-            .ewm(
-                span=20,
-                adjust=False
-            )
-            .mean()
-            .iloc[-1]
-        )
-
-        ema50 = (
-            series
-            .ewm(
-                span=50,
-                adjust=False
-            )
-            .mean()
-            .iloc[-1]
-        )
-
-        ema200 = (
-            series
-            .ewm(
-                span=200,
-                adjust=False
-            )
-            .mean()
-            .iloc[-1]
-        )
-
-        ema_universe += 1
-
-        if price > ema20:
-            ema20_count += 1
-
-        if price > ema50:
-            ema50_count += 1
-
-        if price > ema200:
-            ema200_count += 1
-
-    if ema_universe:
-        above20 = (
-            ema20_count /
-            ema_universe *
-            100
-        )
-
-        above50 = (
-            ema50_count /
-            ema_universe *
-            100
-        )
-
-        above200 = (
-            ema200_count /
-            ema_universe *
-            100
-        )
-
-    else:
-        above20 = np.nan
-        above50 = np.nan
-        above200 = np.nan
-
-    # -----------------------------------------------------
-    # STORE SESSION
-    # -----------------------------------------------------
-
-    rows.append({
-        "session_date":
-            str(pd.Timestamp(d).date()),
-
-        "advances":
-            adv,
-
-        "declines":
-            dec,
-
-        "unchanged":
-            unchanged,
-
-        "ad_ratio":
-            None
-            if not np.isfinite(ad_ratio)
-            else round(
-                float(ad_ratio),
-                4
-            ),
-
-        "trin":
-            None
-            if not np.isfinite(trin)
-            else round(
-                float(trin),
-                4
-            ),
-
-        "up_4_5":
-            up45,
-
-        "down_4_5":
-            down45,
-
-        "up20_5d":
-            up20,
-
-        "universe":
-            int(len(cur)),
-
-        "ema_universe":
-            int(ema_universe),
-
-        "above_20_ema":
-            None
-            if not np.isfinite(above20)
-            else round(
-                float(above20),
-                2
-            ),
-
-        "above_50_ema":
-            None
-            if not np.isfinite(above50)
-            else round(
-                float(above50),
-                2
-            ),
-
-        "above_200_ema":
-            None
-            if not np.isfinite(above200)
-            else round(
-                float(above200),
-                2
-            )
-    })
-
-
-# ---------------------------------------------------------
-# VALIDATION
-# ---------------------------------------------------------
-
-if len(rows) != 50:
-    raise SystemExit(
-        f"Expected exactly 50 sessions, got {len(rows)}"
-    )
-
-for row in rows:
-    if row["universe"] <= 0:
-        raise SystemExit(
-            "Validation failed: empty session "
-            + row["session_date"]
-        )
-
-    if row["advances"] + row["declines"] + row["unchanged"] > row["universe"]:
-        raise SystemExit(
-            "Validation failed: breadth counts exceed universe "
-            + row["session_date"]
-        )
-
-
-# ---------------------------------------------------------
-# WRITE OUTPUT
-# ---------------------------------------------------------
-
-os.makedirs(
-    "data",
-    exist_ok=True
-)
-
-result = {
-    "sessions": rows,
-    "latest": rows[-1],
-    "raw_files": len(files),
-    "valid_raw_files": len(frames),
-    "source": "NSE official bhavcopy files",
-    "session_count": len(rows)
-}
-
-with open(
-    OUT,
-    "w",
-    encoding="utf-8"
-) as f:
-
-    json.dump(
-        result,
-        f,
-        indent=2
-    )
-
-
-print(
-    "SUCCESS:",
-    len(rows),
-    "sessions calculated"
-)
-
-print(
-    "Latest session:",
-    rows[-1]["session_date"]
-)
-
-print(
-    "Latest A/D:",
-    rows[-1]["advances"],
-    "/",
-    rows[-1]["declines"]
-)
-
-print(
-    "Latest TRIN:",
-    rows[-1]["trin"]
-)
+import glob,os,json,re
+import numpy as np,pandas as pd
+RAW="data/raw";AUX="data/aux";OUT="data/market_intelligence.json"
+def cols(df):df.columns=[str(c).replace("\ufeff","").strip().upper() for c in df.columns];return df
+def pick(df,names):
+  return next((n for n in names if n in df.columns),None)
+def rawfile(p):
+  try:df=cols(pd.read_csv(p,low_memory=False,encoding="utf-8-sig"))
+  except:return None
+  sy=pick(df,["SYMBOL","TCKRSYMB","SECURITY"]);cl=pick(df,["CLOSE_PRICE","CLOSE","CLSPRIC","PRICCLSGPRIC","LAST_PRICE"])
+  pc=pick(df,["PREV_CLOSE","PRV_CLPR","PRVSCLSGPRIC"]);vo=pick(df,["TTL_TRD_QNTY","TOTTRDQTY","TOTALTRADGVOLUME","VOLUME","TTL_TRD_QNTY"])
+  se=pick(df,["SERIES","SCTYSRS"])
+  if not sy or not cl:return None
+  x=pd.DataFrame({"SYMBOL":df[sy].astype(str).str.strip(),"CLOSE":pd.to_numeric(df[cl],errors="coerce"),
+                  "PREV_CLOSE":pd.to_numeric(df[pc],errors="coerce") if pc else np.nan,
+                  "VOLUME":pd.to_numeric(df[vo],errors="coerce") if vo else 0})
+  if se:x=x[df[se].astype(str).str.upper().isin(["EQ","BE","BZ"])].copy()
+  return x[x.CLOSE.notna() & x.SYMBOL.ne("")].copy()
+fs=sorted(glob.glob(f"{RAW}/*.csv"));frames=[]
+for p in fs:
+  x=rawfile(p)
+  if x is not None:
+    x["DATE"]=pd.Timestamp(os.path.basename(p)[:10]);frames.append(x)
+if not frames:raise SystemExit("No valid NSE raw files found")
+allx=pd.concat(frames,ignore_index=True).drop_duplicates(["DATE","SYMBOL"],keep="last").sort_values(["DATE","SYMBOL"])
+dates=sorted(allx.DATE.unique())[-50:]
+if len(dates)!=50:raise SystemExit(f"Expected exactly 50 sessions, got {len(dates)}")
+daily={d:allx[allx.DATE==d].copy() for d in dates}
+
+def mcap(d):
+  p=f"{AUX}/mcap/{pd.Timestamp(d).date()}.csv"
+  if not os.path.exists(p):return None
+  try:x=cols(pd.read_csv(p,low_memory=False,encoding="utf-8-sig"))
+  except:return None
+  sy=pick(x,["SYMBOL","TCKRSYMB","SECURITY"]);mc=next((c for c in x.columns if ("MARKET" in c and "CAP" in c) or "MCAP" in c or "MKT_CAP" in c),None)
+  if not sy or not mc:return None
+  z=pd.DataFrame({"SYMBOL":x[sy].astype(str).str.strip().str.upper(),"MCAP":pd.to_numeric(x[mc],errors="coerce")}).dropna()
+  if z.MCAP.median()>1e7:z.MCAP/=1e7
+  return z.drop_duplicates("SYMBOL")
+def vix():
+  p=f"{AUX}/india_vix.json"
+  if not os.path.exists(p):return {}
+  try:o=json.load(open(p,encoding="utf8"))
+  except:return {}
+  a=o.get("data",o) if isinstance(o,dict) else o;out={}
+  if isinstance(a,list):
+    for r in a:
+      if not isinstance(r,dict):continue
+      dt=next((r[k] for k in r if str(k).upper() in ("EOD_TIMESTAMP","DATE","DATE1","TIMESTAMP")),None)
+      cl=next((r[k] for k in r if "CLOSE" in str(k).upper()),None)
+      if dt is not None and cl is not None:
+        try:out[str(pd.to_datetime(dt).date())]=float(str(cl).replace(",",""))
+        except:pass
+  return out
+def industry():
+  p=f"{AUX}/nifty500.csv"
+  if not os.path.exists(p):return {}
+  try:x=cols(pd.read_csv(p,low_memory=False,encoding="utf-8-sig"))
+  except:return {}
+  sy=pick(x,["SYMBOL"]);ind=pick(x,["INDUSTRY"])
+  return dict(zip(x[sy].astype(str).str.strip().str.upper(),x[ind].astype(str).str.strip())) if sy and ind else {}
+def sector(i):
+  z=str(i).upper()
+  mp=[("Financials",["FINANCIAL","BANK","INSURANCE","NBFC"]),("Information Technology",["IT","SOFTWARE"]),
+      ("Healthcare",["PHARMA","HEALTHCARE"]),("Energy",["ENERGY","OIL","GAS"]),("Materials",["METALS","CEMENT","CHEMICAL","FERTIL"]),
+      ("Industrials",["INDUSTRIAL","CONSTRUCTION","CAPITAL GOODS"]),("Consumer",["CONSUMER","FMCG","RETAIL"]),
+      ("Automobile",["AUTOMOBILE","AUTO"]),("Telecom",["TELECOM"]),("Media",["MEDIA"]),("Textiles",["TEXTILE"]),
+      ("Realty",["REALTY"]),("Services",["SERVICES"]),("Utilities",["POWER","UTILITY"])]
+  for s,k in mp:
+    if any(q in z for q in k):return s
+  return "Other"
+def idxfile(d):
+  p=f"{AUX}/indices/{pd.Timestamp(d).date()}.csv"
+  if not os.path.exists(p):return {}
+  try:x=cols(pd.read_csv(p,low_memory=False,encoding="utf-8-sig"))
+  except:return {}
+  n=pick(x,["INDEX_NAME","INDEX NAME","INDEX","INDEXNAME"]);c=pick(x,["CLOSE","CLOSE_PRICE","CLOSING_INDEX_VALUE"])
+  if not n or not c:return {}
+  out={}
+  for _,r in x.iterrows():
+    try:out[str(r[n]).strip().upper()]=float(str(r[c]).replace(",",""))
+    except:pass
+  return out
+vx=vix();imap=industry();ix={d:idxfile(d) for d in dates}
+aliases={"NIFTY AUTO":"Automobile","NIFTY BANK":"Financials","NIFTY FINANCIAL SERVICES":"Financials","NIFTY FMCG":"Consumer",
+"NIFTY IT":"Information Technology","NIFTY MEDIA":"Media","NIFTY METAL":"Materials","NIFTY PHARMA":"Healthcare",
+"NIFTY PSU BANK":"Financials","NIFTY PRIVATE BANK":"Financials","NIFTY REALTY":"Realty","NIFTY OIL AND GAS":"Energy",
+"NIFTY HEALTHCARE":"Healthcare","NIFTY CONSUMER DURABLES":"Consumer","NIFTY TELECOM":"Telecom","NIFTY CONSUMER SERVICES":"Services"}
+def sec40(i):
+  if i<40:return {}
+  a,b=ix.get(dates[i-40],{}),ix.get(dates[i],{});o={}
+  for name,sec in aliases.items():
+    def f(m):
+      for k,v in m.items():
+        if k==name or name in k:return v
+    x,y=f(a),f(b)
+    if x and y:o[sec]=round((y/x-1)*100,2)
+  return o
+
+rows=[]
+for i,d in enumerate(dates):
+  c=daily[d].copy()
+  if i:c=c.merge(daily[dates[i-1]][["SYMBOL","CLOSE","VOLUME"]].rename(columns={"CLOSE":"PC","VOLUME":"PV"}),on="SYMBOL",how="left")
+  else:c["PC"]=c.PREV_CLOSE
+  c["BASE"]=c.PC.fillna(c.PREV_CLOSE);ret=c.CLOSE/c.BASE-1;v=ret.replace([np.inf,-np.inf],np.nan).notna()
+  adv=int((ret[v]>0).sum());dec=int((ret[v]<0).sum());un=int((ret[v]==0).sum());adr=adv/dec if dec else np.nan
+  uv=c.loc[ret>0,"VOLUME"].fillna(0).sum();dv=c.loc[ret<0,"VOLUME"].fillna(0).sum();tr=(adr/(uv/dv)) if adr and uv and dv else np.nan
+  up45=int((ret>=.045).sum());dn45=int((ret<=-.045).sum())
+  up20=0
+  if i>=5:
+    q=c[["SYMBOL","CLOSE"]].merge(daily[dates[i-5]][["SYMBOL","CLOSE"]].rename(columns={"CLOSE":"C5"}),on="SYMBOL",how="left")
+    up20=int(((q.CLOSE/q.C5-1)>=.20).sum())
+  e20=e50=e200=den=0
+  for _,g in allx[allx.DATE<=d].groupby("SYMBOL"):
+    s=g.sort_values("DATE").CLOSE.dropna()
+    if len(s)<20:continue
+    px=s.iloc[-1];den+=1
+    e20+=int(px>s.ewm(span=20,adjust=False).mean().iloc[-1]);e50+=int(px>s.ewm(span=50,adjust=False).mean().iloc[-1]);e200+=int(px>s.ewm(span=200,adjust=False).mean().iloc[-1])
+  mc=mcap(d);large=mid=small=None
+  if mc is not None and len(mc)>=250:
+    rk=dict(zip(mc.sort_values("MCAP",ascending=False).SYMBOL,range(1,len(mc)+1)));rr=c.SYMBOL.str.upper().map(rk)
+    large_mask=rr<=100; mid_mask=(rr>=101)&(rr<=250); small_mask=(rr>=251)&(rr<=500)
+    large=round(float((ret[large_mask]>0).sum()/large_mask.sum()*100),2) if large_mask.sum() else None
+    mid=round(float((ret[mid_mask]>0).sum()/mid_mask.sum()*100),2) if mid_mask.sum() else None
+    small=round(float((ret[small_mask]>0).sum()/small_mask.sum()*100),2) if small_mask.sum() else None
+  near=0
+  for _,g in allx[allx.DATE<=d].groupby("SYMBOL"):
+    s=g.sort_values("DATE").CLOSE.dropna()
+    if len(s)>=20 and s.iloc[-1]>=.9*s.tail(252).max():near+=1
+  pen={}
+  for sym in c.SYMBOL.unique():
+    sec=sector(imap.get(str(sym).upper(),""))
+    if sec=="Other":continue
+    s=allx[(allx.SYMBOL==sym)&(allx.DATE<=d)].sort_values("DATE").CLOSE
+    if len(s)>=56:
+      pen.setdefault(sec,[0,0]);pen[sec][1]+=1;pen[sec][0]+=int(s.iloc[-1]>s.iloc[-56:-1].max())
+  pen={k:round(a/b*100,2) for k,(a,b) in pen.items() if b}
+  rows.append({"session_date":str(pd.Timestamp(d).date()),"advances":adv,"declines":dec,"unchanged":un,
+    "ad_ratio":None if not np.isfinite(adr) else round(float(adr),4),"trin":None if not np.isfinite(tr) else round(float(tr),4),
+    "up_4_5":up45,"down_4_5":dn45,"up20_5d":up20,"universe":len(c),"ema_universe":den,
+    "above_20_ema":round(e20/den*100,2) if den else None,"above_50_ema":round(e50/den*100,2) if den else None,
+    "above_200_ema":round(e200/den*100,2) if den else None,"large_cap_adv_pct":large,"mid_cap_adv_pct":mid,"small_cap_adv_pct":small,
+    "near_10pct_52w_high":near,"near_10pct_52w_high_pct":round(near/len(c)*100,2) if len(c) else None,
+    "india_vix":vx.get(str(pd.Timestamp(d).date())),"breakout_follow_through_pct":None,
+    "sector_40d_returns":sec40(i),"sector_55d_high_penetration":pen})
+# Breakout follow-through: for each ledger session, evaluate 55-session highs and whether
+# the breakout close is retained two completed sessions later. The last two sessions are
+# naturally unavailable for T+2 and remain N/V rather than being estimated.
+all_dates=sorted(allx.DATE.unique())
+for r in rows:
+  d=pd.Timestamp(r["session_date"])
+  try:i=all_dates.index(d)
+  except ValueError:continue
+  if i<55 or i+2>=len(all_dates):continue
+  outcomes=[]
+  for j in range(55,i):
+    a=all_dates[j];b=all_dates[j+2]
+    prior=allx[allx.DATE<a].groupby("SYMBOL").CLOSE.max()
+    t=daily.get(a,allx[allx.DATE==a]).set_index("SYMBOL").CLOSE
+    f=daily.get(b,allx[allx.DATE==b]).set_index("SYMBOL").CLOSE
+    common=t.index.intersection(prior.index).intersection(f.index)
+    br=t.loc[common]>prior.loc[common]
+    if br.any():outcomes += list((f.loc[common[br]]>=t.loc[common[br]]).values)
+  r["breakout_follow_through_pct"]=round(float(np.mean(outcomes)*100),2) if outcomes else None
+
+# Latest 50-stock RVOL table.
+rv=[];d=dates[-1];mc=mcap(d)
+if mc is not None:
+  for sym,g in allx.groupby("SYMBOL"):
+    g=g[g.DATE<=d].sort_values("DATE")
+    if len(g)<25:continue
+    z=g.tail(25);base=z.head(20).VOLUME.mean();last=z.tail(5).VOLUME.mean()
+    if base<=0:continue
+    m=mc.loc[mc.SYMBOL==str(sym).upper(),"MCAP"];m=float(m.iloc[0]) if len(m) else np.nan
+    if pd.notna(m) and 300<m<31000:
+      p=float(z.CLOSE.iloc[-1]);old=float(g.tail(41).CLOSE.iloc[0]) if len(g)>=41 else np.nan
+      rv.append({"symbol":str(sym),"weekly_rvol_pct":round(last/base*100,2),"last_40d_return_pct":round((p/old-1)*100,2) if old else None,"current_price":round(p,2),"market_cap_cr":round(m,2),"sector":sector(imap.get(str(sym).upper(),""))})
+rv=sorted(rv,key=lambda x:x["weekly_rvol_pct"],reverse=True)[:50]
+s40=sorted([{"sector":k,"return_40d_pct":v} for k,v in rows[-1]["sector_40d_returns"].items()],key=lambda x:x["return_40d_pct"],reverse=True)
+s55=sorted([{"sector":k,"penetration_pct":v} for k,v in rows[-1]["sector_55d_high_penetration"].items()],key=lambda x:x["penetration_pct"],reverse=True)
+res={"sessions":rows,"latest":rows[-1],"high_rvol_stocks":rv,"sector_40d_ranking":s40,"sector_55d_high_ranking":s55,
+"data_coverage":{"raw_sessions":50,"mcap_files":sum(os.path.exists(f"{AUX}/mcap/{pd.Timestamp(d).date()}.csv") for d in dates),
+"index_files":sum(os.path.exists(f"{AUX}/indices/{pd.Timestamp(d).date()}.csv") for d in dates),"vix_rows":len(vx),"nifty500_sector_map":bool(imap)}}
+os.makedirs("data",exist_ok=True);json.dump(res,open(OUT,"w",encoding="utf8"),indent=2)
+print("SUCCESS:",len(rows),"sessions calculated");print("Latest:",rows[-1]["session_date"],"A/D",rows[-1]["advances"],"/",rows[-1]["declines"],"VIX",rows[-1]["india_vix"])
