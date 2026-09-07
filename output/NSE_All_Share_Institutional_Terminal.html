@@ -114,10 +114,10 @@ footer{margin:28px 0 10px;color:#64748b;font-size:.7rem}
   <div class="card"><div class="cap-title">Small • 251–500</div><div class="cap-value" id="small">—</div><div class="bar"><i id="smallBar"></i></div></div>
 </section>
 
-<div class="section">🏢 Sector Momentum <span>40-session actual sector-index return + 55-session close-high penetration</span></div>
+<div class="section">🏢 Sector Momentum <span>27% 40-session stock-return penetration + 55-session 97%-high penetration</span></div>
 <section class="sector-grid">
-  <div class="card"><b>40-Session Sector Return — High to Low</b><div id="sector40" style="margin-top:10px"></div></div>
-  <div class="card"><b>55-Session High Penetration — High to Low</b><div id="sector55" style="margin-top:10px"></div></div>
+  <div class="card"><b>27% Return Percentage — High to Low</b><div id="sector40" style="margin-top:10px"></div></div>
+  <div class="card"><b>55-Day High Penetration — High to Low</b><div id="sector55" style="margin-top:10px"></div></div>
 </section>
 
 <div class="section">📈 50-Day Rolling Breadth Oscillators</div>
@@ -175,8 +175,8 @@ footer{margin:28px 0 10px;color:#64748b;font-size:.7rem}
   <div class="assumption-grid">
     <div class="assumption"><b>Universe:</b> the all-share breadth universe varies by daily securities available in the NSE bhavcopy. Cross-session comparisons therefore describe participation in the available market universe, not a fixed constituent panel.</div>
     <div class="assumption"><b>Cap buckets:</b> Large/Mid/Small are derived from the available daily market-cap ranking layer (Top 100 / 101–250 / 251–500), not fixed NIFTY index constituents.</div>
-    <div class="assumption"><b>Sector return:</b> 40-session sector momentum uses available NSE sector-index closes and mapped aliases; it is not a simple equal-weight return of every all-share stock.</div>
-    <div class="assumption"><b>Sector penetration:</b> classification uses the current NIFTY 500 industry map, so historical classification changes are not reconstructed.</div>
+    <div class="assumption"><b>27% return penetration:</b> percentage of eligible stocks in each sector with a return of at least +27% over the latest 40 completed sessions; sectors are ranked high to low.</div>
+    <div class="assumption"><b>55-day high penetration:</b> percentage of eligible stocks in each sector whose latest-session HIGH is at least 97% of the highest HIGH in the preceding 55 completed sessions; sectors are ranked high to low. Classification uses the current NIFTY 500 industry map, so historical classification changes are not reconstructed.</div>
     <div class="assumption"><b>EMA breadth:</b> computed from available security-level closes; it is a participation measure, not an index trend signal.</div>
     <div class="assumption"><b>Expert view:</b> the interpretation weighs breadth, volume, volatility, trend and leadership together, and explicitly displays contradictory evidence rather than forcing a bullish/bearish conclusion.</div>
   </div>
@@ -328,7 +328,7 @@ function render(D){
   document.getElementById("near").textContent=latest.near_10pct_52w_high?.toLocaleString()??"N/V";
   document.getElementById("nearPct").textContent=pct(latest.near_10pct_52w_high_pct);
   [["large",latest.large_cap_adv_pct],["mid",latest.mid_cap_adv_pct],["small",latest.small_cap_adv_pct]].forEach(([id,v])=>{document.getElementById(id).textContent=pct(v);document.getElementById(id+"Bar").style.width=(Number(v)||0)+"%"});
-  document.getElementById("sector40").innerHTML=sectorRows(D.sector_40d_ranking||D.sector_40d_returns||[],"return_40d_pct");
+  document.getElementById("sector40").innerHTML=sectorRows(D.sector_27pct_return_ranking||[],"return_27pct_penetration");
   document.getElementById("sector55").innerHTML=sectorRows(D.sector_55d_high_ranking||D.sector_55d_high_penetration||[],"penetration_pct");
 
   document.querySelector("#ledgerTable tbody").innerHTML=[...rows].reverse().map(r=>`<tr>
@@ -362,6 +362,5 @@ async function load(){
 }
 load();
 </script>
-<!-- NSE_HTML_REFRESH: generated 2026-09-07 14:47:15 IST | latest verified session 2026-09-04 | 50-session coverage validated -->
 </body>
 </html>
