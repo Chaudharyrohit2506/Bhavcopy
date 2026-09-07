@@ -117,7 +117,7 @@ for i,d in enumerate(dates):
     c=daily[d];base=c.SYMBOL.map(prev_close.loc[d]) if i else c.PREV_CLOSE;ret=c.CLOSE/base-1
     valid=ret.replace([np.inf,-np.inf],np.nan).notna();rv=ret[valid]
     adv=int((rv>0).sum());dec=int((rv<0).sum());un=int((rv==0).sum());adr=adv/dec if dec else np.nan
-    vv=c.VOLUME.fillna(0);uv=float(vv[rv>0].sum());dv=float(vv[rv<0].sum());tr=(adr/(uv/dv)) if adr and uv and dv else np.nan
+    vv=c.VOLUME.fillna(0);uv=float(vv[ret>0].sum());dv=float(vv[ret<0].sum());tr=(adr/(uv/dv)) if adr and uv and dv else np.nan
     up45=int((rv>=.045).sum());dn45=int((rv<=-.045).sum());up20=0
     if i>=5:
         c5=c.SYMBOL.map(close_p.loc[dates[i-5]]);up20=int(((c.CLOSE/c5-1)>=.20).sum())
