@@ -1,6 +1,6 @@
 import json,html,os
 D=json.load(open('data/market_intelligence.json',encoding='utf8')); rows=D['sessions']; latest=rows[-1]
-
+dates=[r['session_date'] for r in rows]
 def n(x): return 'N/V' if x is None else f'{x:.2f}'
 def p(x): return 'N/V' if x is None else f'{x:.2f}%'
 def e(x): return html.escape(str(x))
