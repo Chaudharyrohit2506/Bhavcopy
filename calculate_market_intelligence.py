@@ -305,6 +305,7 @@ for i,d in enumerate(dates):
         'india_vix':vx.get(str(pd.Timestamp(d).date())),
         'breakout_follow_through_pct':None,
         'sector_40d_returns':sec40(i),
+        'sector_27pct_return_penetration':{},
         'sector_55d_high_penetration':{},
         'ad_methodology':'NSE average-price methodology'
     })
@@ -335,18 +336,45 @@ for r,d in zip(rows,dates):
     # A session with zero T-day breakouts is a valid 0.00%, not blank.
     r['breakout_follow_through_pct']=round(numer/denom*100,2) if denom else 0.0
 
+# SECTOR STOCK-CONCENTRATION METRICS
+# 1) 27% Return Percentage: share of stocks in each sector with a
+#    >= +27% return over the latest 40 completed sessions.
+# 2) 55-Day High Penetration: share of stocks in each sector whose
+#    latest-session HIGH reaches at least 97% of the highest HIGH in
+#    the preceding 55 completed sessions.
 sector_map=pd.Series({s:sector(imap.get(s,'')) for s in close_p.columns})
 pos=len(all_dates)-1
 if pos>=55:
-    px=close_p.iloc[pos]
-    prior55=close_p.iloc[pos-55:pos].max()
-    crossed=px>prior55
-    valid=crossed.notna()&sector_map.notna()
-    pen={}
-    for sec,g in crossed[valid].groupby(sector_map[valid]):
+    valid_symbols=close_p.columns.intersection(sector_map.index)
+
+    # 40-session stock return threshold: close(T) vs close(T-40).
+    px40=close_p.iloc[pos]
+    old40=close_p.iloc[pos-40] if pos>=40 else pd.Series(index=close_p.columns,dtype=float)
+    ret40=(px40/old40-1)*100
+    qualifies27=ret40>=27.0
+    valid27=ret40.notna() & sector_map.notna()
+    pen27={}
+    for sec,g in qualifies27[valid27].groupby(sector_map[valid27]):
         if str(sec)!='Other':
-            pen[str(sec)]=round(float(g.mean()*100),2)
-    rows[-1]['sector_55d_high_penetration']=pen
+            denom=int(valid27.groupby(sector_map[valid27]).sum().get(sec,0))
+            numer=int(g.sum())
+            pen27[str(sec)]=round(numer/denom*100,2) if denom else 0.0
+    rows[-1]['sector_27pct_return_penetration']=pen27
+
+    # Relaxed 55-session high threshold: latest HIGH >= 97% of
+    # preceding 55-session highest HIGH.
+    pxh=high_p.iloc[pos]
+    prior55_high_sector=high_p.iloc[pos-55:pos].max()
+    threshold55=prior55_high_sector*0.97
+    qualifies55=pxh>=threshold55
+    valid55=qualifies55.notna() & prior55_high_sector.notna() & sector_map.notna()
+    pen55={}
+    for sec,g in qualifies55[valid55].groupby(sector_map[valid55]):
+        if str(sec)!='Other':
+            denom=int(valid55.groupby(sector_map[valid55]).sum().get(sec,0))
+            numer=int(g.sum())
+            pen55[str(sec)]=round(numer/denom*100,2) if denom else 0.0
+    rows[-1]['sector_55d_high_penetration']=pen55
 
 rv=[]
 latest=dates[-1]
@@ -384,9 +412,9 @@ if mc is not None:
 
 rv=sorted(rv,key=lambda x:x['weekly_rvol_pct'],reverse=True)[:50]
 
-s40=sorted(
-    [{'sector':k,'return_40d_pct':v} for k,v in rows[-1]['sector_40d_returns'].items()],
-    key=lambda x:x['return_40d_pct'],
+s27=sorted(
+    [{'sector':k,'return_27pct_penetration':v} for k,v in rows[-1]['sector_27pct_return_penetration'].items()],
+    key=lambda x:x['return_27pct_penetration'],
     reverse=True
 )
 s55=sorted(
@@ -399,7 +427,7 @@ res={
     'sessions':rows,
     'latest':rows[-1],
     'high_rvol_stocks':rv,
-    'sector_40d_ranking':s40,
+    'sector_27pct_return_ranking':s27,
     'sector_55d_high_ranking':s55,
     'data_coverage':{
         'raw_sessions':50,
