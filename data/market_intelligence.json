@@ -23,6 +23,7 @@
       "india_vix": 13.61,
       "breakout_follow_through_pct": 51.77,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -49,6 +50,7 @@
       "india_vix": 13.6,
       "breakout_follow_through_pct": 47.13,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -75,6 +77,7 @@
       "india_vix": 13.24,
       "breakout_follow_through_pct": 52.74,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -101,6 +104,7 @@
       "india_vix": 12.29,
       "breakout_follow_through_pct": 56.63,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -127,6 +131,7 @@
       "india_vix": 11.8,
       "breakout_follow_through_pct": 42.45,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -153,6 +158,7 @@
       "india_vix": 11.82,
       "breakout_follow_through_pct": 41.26,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -179,6 +185,7 @@
       "india_vix": 11.65,
       "breakout_follow_through_pct": 38.65,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -205,6 +212,7 @@
       "india_vix": 14.68,
       "breakout_follow_through_pct": 24.14,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -231,6 +239,7 @@
       "india_vix": 13.36,
       "breakout_follow_through_pct": 44.92,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -257,6 +266,7 @@
       "india_vix": 12.25,
       "breakout_follow_through_pct": 49.72,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -283,6 +293,7 @@
       "india_vix": 13.28,
       "breakout_follow_through_pct": 55.98,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -309,6 +320,7 @@
       "india_vix": 13.75,
       "breakout_follow_through_pct": 36.48,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -335,6 +347,7 @@
       "india_vix": 13.27,
       "breakout_follow_through_pct": 42.54,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -361,6 +374,7 @@
       "india_vix": 12.88,
       "breakout_follow_through_pct": 43.94,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -387,6 +401,7 @@
       "india_vix": 13.15,
       "breakout_follow_through_pct": 48.75,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -413,6 +428,7 @@
       "india_vix": 12.98,
       "breakout_follow_through_pct": 47.24,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -439,6 +455,7 @@
       "india_vix": 12.6,
       "breakout_follow_through_pct": 50.35,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -465,6 +482,7 @@
       "india_vix": 13.29,
       "breakout_follow_through_pct": 46.46,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -491,6 +509,7 @@
       "india_vix": 13.48,
       "breakout_follow_through_pct": 43.56,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -517,6 +536,7 @@
       "india_vix": 14.03,
       "breakout_follow_through_pct": 45.45,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -543,6 +563,7 @@
       "india_vix": 12.66,
       "breakout_follow_through_pct": 55.15,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -569,6 +590,7 @@
       "india_vix": 12.56,
       "breakout_follow_through_pct": 45.74,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -595,6 +617,7 @@
       "india_vix": 12.01,
       "breakout_follow_through_pct": 47.53,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -621,6 +644,7 @@
       "india_vix": 12.16,
       "breakout_follow_through_pct": 36.84,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -647,6 +671,7 @@
       "india_vix": 11.76,
       "breakout_follow_through_pct": 50.0,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -673,6 +698,7 @@
       "india_vix": 11.93,
       "breakout_follow_through_pct": 61.21,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -699,6 +725,7 @@
       "india_vix": 12.19,
       "breakout_follow_through_pct": 40.16,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -725,6 +752,7 @@
       "india_vix": 12.06,
       "breakout_follow_through_pct": 52.89,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -751,6 +779,7 @@
       "india_vix": 12.16,
       "breakout_follow_through_pct": 44.4,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -777,6 +806,7 @@
       "india_vix": 12.16,
       "breakout_follow_through_pct": 46.15,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -803,6 +833,7 @@
       "india_vix": 12.25,
       "breakout_follow_through_pct": 41.2,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -829,6 +860,7 @@
       "india_vix": 11.86,
       "breakout_follow_through_pct": 46.0,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -855,6 +887,7 @@
       "india_vix": 11.69,
       "breakout_follow_through_pct": 52.98,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -881,6 +914,7 @@
       "india_vix": 11.42,
       "breakout_follow_through_pct": 47.71,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -907,6 +941,7 @@
       "india_vix": 11.31,
       "breakout_follow_through_pct": 38.79,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -933,6 +968,7 @@
       "india_vix": 11.33,
       "breakout_follow_through_pct": 54.49,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -959,6 +995,7 @@
       "india_vix": 11.39,
       "breakout_follow_through_pct": 51.25,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -985,6 +1022,7 @@
       "india_vix": 11.32,
       "breakout_follow_through_pct": 46.21,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1011,6 +1049,7 @@
       "india_vix": 10.76,
       "breakout_follow_through_pct": 57.14,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1037,6 +1076,7 @@
       "india_vix": 11.2,
       "breakout_follow_through_pct": 52.47,
       "sector_40d_returns": {},
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1074,6 +1114,7 @@
         "Telecom": 0.6,
         "Services": 8.23
       },
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1111,6 +1152,7 @@
         "Telecom": 2.67,
         "Services": 7.72
       },
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1148,6 +1190,7 @@
         "Telecom": 1.52,
         "Services": 5.19
       },
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1185,6 +1228,7 @@
         "Telecom": 3.26,
         "Services": 4.35
       },
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1222,6 +1266,7 @@
         "Telecom": 3.18,
         "Services": 4.11
       },
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1259,6 +1304,7 @@
         "Telecom": 1.85,
         "Services": 4.18
       },
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1296,6 +1342,7 @@
         "Telecom": 1.16,
         "Services": 3.41
       },
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1333,6 +1380,7 @@
         "Telecom": 2.57,
         "Services": 4.4
       },
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1370,6 +1418,7 @@
         "Telecom": 0.27,
         "Services": 2.59
       },
+      "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
     },
@@ -1407,19 +1456,35 @@
         "Telecom": 1.46,
         "Services": 2.29
       },
-      "sector_55d_high_penetration": {
+      "sector_27pct_return_penetration": {
         "Automobile": 2.63,
-        "Consumer": 2.74,
-        "Energy": 5.88,
-        "Financials": 5.94,
+        "Consumer": 1.37,
+        "Energy": 0.0,
+        "Financials": 0.99,
         "Healthcare": 2.08,
         "Industrials": 0.0,
-        "Information Technology": 3.17,
+        "Information Technology": 4.76,
         "Materials": 0.0,
         "Media": 0.0,
         "Realty": 0.0,
-        "Services": 0.0,
+        "Services": 7.14,
         "Telecom": 0.0,
+        "Textiles": 0.0,
+        "Utilities": 0.0
+      },
+      "sector_55d_high_penetration": {
+        "Automobile": 7.89,
+        "Consumer": 10.96,
+        "Energy": 35.29,
+        "Financials": 25.74,
+        "Healthcare": 18.75,
+        "Industrials": 12.5,
+        "Information Technology": 22.22,
+        "Materials": 20.45,
+        "Media": 20.0,
+        "Realty": 36.36,
+        "Services": 7.14,
+        "Telecom": 10.0,
         "Textiles": 20.0,
         "Utilities": 5.88
       },
@@ -1460,19 +1525,35 @@
       "Telecom": 1.46,
       "Services": 2.29
     },
-    "sector_55d_high_penetration": {
+    "sector_27pct_return_penetration": {
       "Automobile": 2.63,
-      "Consumer": 2.74,
-      "Energy": 5.88,
-      "Financials": 5.94,
+      "Consumer": 1.37,
+      "Energy": 0.0,
+      "Financials": 0.99,
       "Healthcare": 2.08,
       "Industrials": 0.0,
-      "Information Technology": 3.17,
+      "Information Technology": 4.76,
       "Materials": 0.0,
       "Media": 0.0,
       "Realty": 0.0,
-      "Services": 0.0,
+      "Services": 7.14,
       "Telecom": 0.0,
+      "Textiles": 0.0,
+      "Utilities": 0.0
+    },
+    "sector_55d_high_penetration": {
+      "Automobile": 7.89,
+      "Consumer": 10.96,
+      "Energy": 35.29,
+      "Financials": 25.74,
+      "Healthcare": 18.75,
+      "Industrials": 12.5,
+      "Information Technology": 22.22,
+      "Materials": 20.45,
+      "Media": 20.0,
+      "Realty": 36.36,
+      "Services": 7.14,
+      "Telecom": 10.0,
       "Textiles": 20.0,
       "Utilities": 5.88
     },
@@ -1980,104 +2061,120 @@
       "sector": "Industrials"
     }
   ],
-  "sector_40d_ranking": [
+  "sector_27pct_return_ranking": [
+    {
+      "sector": "Services",
+      "return_27pct_penetration": 7.14
+    },
     {
       "sector": "Information Technology",
-      "return_40d_pct": 9.58
-    },
-    {
-      "sector": "Media",
-      "return_40d_pct": 5.47
-    },
-    {
-      "sector": "Materials",
-      "return_40d_pct": 4.95
-    },
-    {
-      "sector": "Consumer",
-      "return_40d_pct": 3.34
+      "return_27pct_penetration": 4.76
     },
     {
       "sector": "Automobile",
-      "return_40d_pct": 3.17
-    },
-    {
-      "sector": "Services",
-      "return_40d_pct": 2.29
-    },
-    {
-      "sector": "Telecom",
-      "return_40d_pct": 1.46
+      "return_27pct_penetration": 2.63
     },
     {
       "sector": "Healthcare",
-      "return_40d_pct": 0.43
+      "return_27pct_penetration": 2.08
+    },
+    {
+      "sector": "Consumer",
+      "return_27pct_penetration": 1.37
     },
     {
       "sector": "Financials",
-      "return_40d_pct": -0.92
+      "return_27pct_penetration": 0.99
+    },
+    {
+      "sector": "Energy",
+      "return_27pct_penetration": 0.0
+    },
+    {
+      "sector": "Industrials",
+      "return_27pct_penetration": 0.0
+    },
+    {
+      "sector": "Materials",
+      "return_27pct_penetration": 0.0
+    },
+    {
+      "sector": "Media",
+      "return_27pct_penetration": 0.0
     },
     {
       "sector": "Realty",
-      "return_40d_pct": -3.27
+      "return_27pct_penetration": 0.0
+    },
+    {
+      "sector": "Telecom",
+      "return_27pct_penetration": 0.0
+    },
+    {
+      "sector": "Textiles",
+      "return_27pct_penetration": 0.0
+    },
+    {
+      "sector": "Utilities",
+      "return_27pct_penetration": 0.0
     }
   ],
   "sector_55d_high_ranking": [
+    {
+      "sector": "Realty",
+      "penetration_pct": 36.36
+    },
+    {
+      "sector": "Energy",
+      "penetration_pct": 35.29
+    },
+    {
+      "sector": "Financials",
+      "penetration_pct": 25.74
+    },
+    {
+      "sector": "Information Technology",
+      "penetration_pct": 22.22
+    },
+    {
+      "sector": "Materials",
+      "penetration_pct": 20.45
+    },
+    {
+      "sector": "Media",
+      "penetration_pct": 20.0
+    },
     {
       "sector": "Textiles",
       "penetration_pct": 20.0
     },
     {
-      "sector": "Financials",
-      "penetration_pct": 5.94
+      "sector": "Healthcare",
+      "penetration_pct": 18.75
     },
     {
-      "sector": "Energy",
-      "penetration_pct": 5.88
+      "sector": "Industrials",
+      "penetration_pct": 12.5
+    },
+    {
+      "sector": "Consumer",
+      "penetration_pct": 10.96
+    },
+    {
+      "sector": "Telecom",
+      "penetration_pct": 10.0
+    },
+    {
+      "sector": "Automobile",
+      "penetration_pct": 7.89
+    },
+    {
+      "sector": "Services",
+      "penetration_pct": 7.14
     },
     {
       "sector": "Utilities",
       "penetration_pct": 5.88
-    },
-    {
-      "sector": "Information Technology",
-      "penetration_pct": 3.17
-    },
-    {
-      "sector": "Consumer",
-      "penetration_pct": 2.74
-    },
-    {
-      "sector": "Automobile",
-      "penetration_pct": 2.63
-    },
-    {
-      "sector": "Healthcare",
-      "penetration_pct": 2.08
-    },
-    {
-      "sector": "Industrials",
-      "penetration_pct": 0.0
-    },
-    {
-      "sector": "Materials",
-      "penetration_pct": 0.0
-    },
-    {
-      "sector": "Media",
-      "penetration_pct": 0.0
-    },
-    {
-      "sector": "Realty",
-      "penetration_pct": 0.0
-    },
-    {
-      "sector": "Services",
-      "penetration_pct": 0.0
-    },
-    {
-      "sector": "Telecom",
-      "penetration_pct": 0.0
     }
   ],
   "data_coverage": {
