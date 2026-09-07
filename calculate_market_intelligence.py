@@ -11,10 +11,10 @@ def rawfile(p):
   pc=pick(df,["PREV_CLOSE","PRV_CLPR","PRVSCLSGPRIC"]);vo=pick(df,["TTL_TRD_QNTY","TOTTRDQTY","TOTALTRADGVOLUME","VOLUME","TTL_TRD_QNTY"])
   se=pick(df,["SERIES","SCTYSRS"])
   if not sy or not cl:return None
-  x=pd.DataFrame({"SYMBOL":df[sy].astype(str).str.strip(),"CLOSE":pd.to_numeric(df[cl],errors="coerce"),
+  x=pd.DataFrame({"SYMBOL":df[sy].astype(str).str.strip().str.upper(),"CLOSE":pd.to_numeric(df[cl],errors="coerce"),
                   "PREV_CLOSE":pd.to_numeric(df[pc],errors="coerce") if pc else np.nan,
                   "VOLUME":pd.to_numeric(df[vo],errors="coerce") if vo else 0})
-  if se:x=x[df[se].astype(str).str.upper().isin(["EQ","BE","BZ"])].copy()
+  if se:x=x[df[se].astype(str).str.strip().str.upper().isin(["EQ","BE","BZ"])].copy()
   return x[x.CLOSE.notna() & x.SYMBOL.ne("")].copy()
 fs=sorted(glob.glob(f"{RAW}/*.csv"));frames=[]
 for p in fs:
