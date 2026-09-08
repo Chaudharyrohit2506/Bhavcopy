@@ -3,8 +3,7 @@ name: NSE Expert HTML — 8 AM Refresh
 on:
   workflow_dispatch:
   schedule:
-    - cron: "00 08 * * 1-5"
-      timezone: "Asia/Kolkata"
+        - cron: "30 02 * * 1-5"
 
 permissions:
   contents: write
