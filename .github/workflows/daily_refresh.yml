@@ -3,8 +3,7 @@ name: NSE Daily Market Intelligence — Data Refresh
 on:
   workflow_dispatch:
   schedule:
-    - cron: "00 07 * * 1-5"
-      timezone: "Asia/Kolkata"
+   - cron: "30 01 * * 1-5"
 
 permissions:
   contents: write
