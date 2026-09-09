@@ -1,0 +1,23 @@
+name: NSE Scheduler Heartbeat
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "37 01 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nse-scheduler-heartbeat
+  cancel-in-progress: false
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Record scheduled heartbeat
+        run: |
+          echo "NSE scheduler heartbeat fired at $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "Trigger event: ${{ github.event_name }}"
+          echo "Scheduled diagnostic only; production NSE workflows are unchanged."
