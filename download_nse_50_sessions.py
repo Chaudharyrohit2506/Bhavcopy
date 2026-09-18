@@ -29,12 +29,12 @@ NSE_SPECIAL_SESSIONS = {
 }
 def is_nse_equity_session(d):
     if d.year not in NSE_HOLIDAYS:
-    raise RuntimeError(
-        f"NSE holiday calendar not configured for {d.year}. "
-        "Update NSE_HOLIDAYS before running this year."
-    )
+        raise RuntimeError(
+            f"NSE holiday calendar not configured for {d.year}. "
+            "Update NSE_HOLIDAYS before running this year."
+        )
 
-holidays = NSE_HOLIDAYS[d.year]
+    holidays = NSE_HOLIDAYS[d.year]
     special_sessions = NSE_SPECIAL_SESSIONS.get(d.year, set())
 
     if d in special_sessions:
@@ -42,6 +42,7 @@ holidays = NSE_HOLIDAYS[d.year]
 
     return d.weekday() < 5 and d not in holidays
 
+    
 def latest_completed_nse_session(now_ist):
     d=now_ist.date()
 
