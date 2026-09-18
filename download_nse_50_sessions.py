@@ -130,6 +130,37 @@ def pr_member(d,member,out):
         return False
 
 m=ix=0
+missing_mcap=[]
+missing_index=[]
+
+for d in dates:
+    if pr_member(d,f'mcap{d:%d%m%Y}.csv',f'{MCAP}/{d}.csv'):
+        m+=1
+    else:
+        missing_mcap.append(d.isoformat())
+
+    time.sleep(.15)
+
+    o=f'{INDEX}/{d}.csv'
+    if os.path.exists(o) and os.path.getsize(o)>100:
+        ix+=1
+    else:
+        try:
+            r=s.get(f'https://nsearchives.nseindia.com/content/indices/ind_close_all_{d:%d%m%Y}.csv',timeout=45)
+            if r.status_code==200 and len(r.content)>1000:
+                open(o,'wb').write(r.content)
+                ix+=1
+            else:
+                missing_index.append(d.isoformat())
+        except Exception:
+            missing_index.append(d.isoformat())
+
+    time.sleep(.12)
+
+print("Missing MCAP:", missing_mcap)
+print("Missing INDEX:", missing_index)
+print("Market-cap files:",m,"/ 50")
+print("Index-close files:",ix,"/ 50")
 for d in dates:
     m+=int(pr_member(d,f'mcap{d:%d%m%Y}.csv',f'{MCAP}/{d}.csv'))
     time.sleep(.15)
