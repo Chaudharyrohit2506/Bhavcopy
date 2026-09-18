@@ -1,8 +1,43 @@
 import io,os,zipfile,time,json,re,csv
 from datetime import date,timedelta,datetime
 import requests
+from zoneinfo import ZoneInfo
 
-END=date.today()
+IST=ZoneInfo('Asia/Kolkata')
+NOW_IST=datetime.now(IST)
+
+NSE_HOLIDAYS_2026={
+    date(2026,1,15), date(2026,1,26), date(2026,2,19),
+    date(2026,3,3), date(2026,3,19), date(2026,3,26),
+    date(2026,3,31), date(2026,4,1), date(2026,4,3),
+    date(2026,4,14), date(2026,5,1), date(2026,5,28),
+    date(2026,6,26), date(2026,8,26), date(2026,9,14),
+    date(2026,10,2), date(2026,10,20), date(2026,11,10),
+    date(2026,11,24), date(2026,12,25),
+}
+
+NSE_SPECIAL_SESSIONS_2026={
+    date(2026,11,8),
+}
+
+def is_nse_equity_session(d):
+    if d in NSE_SPECIAL_SESSIONS_2026:
+        return True
+    return d.weekday() < 5 and d not in NSE_HOLIDAYS_2026
+
+def latest_completed_nse_session(now_ist):
+    d=now_ist.date()
+
+    if now_ist.hour < 18:
+        d-=timedelta(days=1)
+
+    while not is_nse_equity_session(d):
+        d-=timedelta(days=1)
+
+    return d
+
+END=latest_completed_nse_session(NOW_IST)
+
 # Keep enough exchange sessions for a full 252-session 52-week lookback
 # plus the 50-session output ledger and a safety buffer.
 LOOKBACK=460
