@@ -20,10 +20,27 @@ NSE_SPECIAL_SESSIONS_2026={
     date(2026,11,8),
 }
 
+NSE_HOLIDAYS = {
+    2026: NSE_HOLIDAYS_2026,
+}
+
+NSE_SPECIAL_SESSIONS = {
+    2026: NSE_SPECIAL_SESSIONS_2026,
+}
 def is_nse_equity_session(d):
-    if d in NSE_SPECIAL_SESSIONS_2026:
+    if d.year not in NSE_HOLIDAYS:
+    raise RuntimeError(
+        f"NSE holiday calendar not configured for {d.year}. "
+        "Update NSE_HOLIDAYS before running this year."
+    )
+
+holidays = NSE_HOLIDAYS[d.year]
+    special_sessions = NSE_SPECIAL_SESSIONS.get(d.year, set())
+
+    if d in special_sessions:
         return True
-    return d.weekday() < 5 and d not in NSE_HOLIDAYS_2026
+
+    return d.weekday() < 5 and d not in holidays
 
 def latest_completed_nse_session(now_ist):
     d=now_ist.date()
