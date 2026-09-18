@@ -52,10 +52,82 @@ if not frames:
     raise SystemExit('No valid NSE raw files found')
 
 allx=pd.concat(frames,ignore_index=True).drop_duplicates(['DATE','SYMBOL'],keep='last').sort_values(['DATE','SYMBOL'])
-all_dates=np.array(sorted(allx.DATE.unique()))
+
+# ------------------------------------------------------------
+# FILTER RAW FILES TO ACTUAL NSE EQUITY SESSIONS
+# ------------------------------------------------------------
+# The downloader maintains this cache from NSE's official
+# holiday-master trading calendar.  This prevents stale/retained
+# holiday raw files (for example 2026-09-14) from displacing a
+# genuine trading session in the latest-50 selection.
+HOLIDAY_CACHE=f'{AUX}/nse_trading_holidays.json'
+
+nse_calendar={}
+
+if os.path.exists(HOLIDAY_CACHE):
+    try:
+        holiday_data=json.load(
+            open(HOLIDAY_CACHE,'r',encoding='utf8')
+        )
+
+        for year,info in holiday_data.items():
+            if not str(year).isdigit():
+                continue
+
+            y=int(year)
+
+            nse_calendar[y]={
+                'holidays':set(info.get('holidays',[])),
+                'special_sessions':set(
+                    info.get('special_sessions',[])
+                )
+            }
+
+    except Exception as e:
+        print('WARNING: Could not read NSE holiday calendar:',e)
+
+def is_nse_equity_session(d):
+    ds=pd.Timestamp(d).date()
+    year=ds.year
+    info=nse_calendar.get(year)
+
+    # If the calendar has not yet been cached for a year, retain the
+    # normal weekday rule rather than treating a missing calendar as
+    # proof that every weekday is a trading session.
+    if info is None:
+        return ds.weekday()<5
+
+    iso=ds.isoformat()
+
+    # NSE can conduct a special session on a weekend (e.g. Muhurat).
+    if iso in info['special_sessions']:
+        return True
+
+    if ds.weekday()>=5:
+        return False
+
+    return iso not in info['holidays']
+
+all_dates=np.array(sorted(
+    d for d in allx.DATE.unique()
+    if is_nse_equity_session(d)
+))
+
+if len(all_dates)<50:
+    raise SystemExit(
+        f'Need at least 50 valid NSE equity sessions, found {len(all_dates)}'
+    )
+
 dates=all_dates[-50:]
-if len(dates)!=50:
-    raise SystemExit(f'Expected exactly 50 sessions, got {len(dates)}')
+
+print(
+    'Valid NSE equity sessions used:',
+    len(dates),
+    '|',
+    pd.Timestamp(dates[0]).date(),
+    'to',
+    pd.Timestamp(dates[-1]).date()
+)
 
 daily={d:g for d,g in allx.groupby('DATE',sort=False)}
 
