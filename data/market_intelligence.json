@@ -1,40 +1,13 @@
 {
   "sessions": [
     {
-      "session_date": "2026-07-28",
-      "advances": 901,
-      "declines": 1765,
-      "unchanged": 51,
-      "ad_ratio": 0.5105,
-      "trin": 0.8273,
-      "up_4_5": 60,
-      "down_4_5": 105,
-      "up20_5d": 0,
-      "universe": 2717,
-      "ema_universe": 2717,
-      "above_20_ema": 36.44,
-      "above_50_ema": 45.75,
-      "above_200_ema": 46.01,
-      "large_cap_adv_pct": 48.98,
-      "mid_cap_adv_pct": 41.89,
-      "small_cap_adv_pct": 29.46,
-      "near_10pct_52w_high": 741,
-      "near_10pct_52w_high_pct": 27.27,
-      "india_vix": 12.56,
-      "breakout_follow_through_pct": 36.48,
-      "sector_40d_returns": {},
-      "sector_27pct_return_penetration": {},
-      "sector_55d_high_penetration": {},
-      "ad_methodology": "NSE average-price methodology"
-    },
-    {
       "session_date": "2026-07-29",
-      "advances": 1603,
-      "declines": 1069,
-      "unchanged": 41,
-      "ad_ratio": 1.4995,
-      "trin": 0.7159,
-      "up_4_5": 132,
+      "advances": 1868,
+      "declines": 808,
+      "unchanged": 39,
+      "ad_ratio": 2.3119,
+      "trin": 0.7752,
+      "up_4_5": 133,
       "down_4_5": 49,
       "up20_5d": 0,
       "universe": 2715,
@@ -144,7 +117,7 @@
       "trin": 0.7369,
       "up_4_5": 137,
       "down_4_5": 51,
-      "up20_5d": 37,
+      "up20_5d": 0,
       "universe": 2727,
       "ema_universe": 2727,
       "above_20_ema": 57.13,
@@ -1102,18 +1075,7 @@
       "near_10pct_52w_high_pct": 31.11,
       "india_vix": 10.35,
       "breakout_follow_through_pct": 53.55,
-      "sector_40d_returns": {
-        "Automobile": -2.46,
-        "Financials": 0.3,
-        "Consumer": -3.41,
-        "Information Technology": -6.85,
-        "Media": 0.53,
-        "Materials": 7.27,
-        "Healthcare": 2.25,
-        "Realty": -5.48,
-        "Telecom": 7.47,
-        "Services": 4.51
-      },
+      "sector_40d_returns": {},
       "sector_27pct_return_penetration": {},
       "sector_55d_high_penetration": {},
       "ad_methodology": "NSE average-price methodology"
@@ -1456,33 +1418,71 @@
         "Telecom": 6.67,
         "Services": -1.12
       },
+      "sector_27pct_return_penetration": {},
+      "sector_55d_high_penetration": {},
+      "ad_methodology": "NSE average-price methodology"
+    },
+    {
+      "session_date": "2026-10-08",
+      "advances": 461,
+      "declines": 2444,
+      "unchanged": 31,
+      "ad_ratio": 0.1886,
+      "trin": 0.2505,
+      "up_4_5": 50,
+      "down_4_5": 382,
+      "up20_5d": 27,
+      "universe": 2947,
+      "ema_universe": 2947,
+      "above_20_ema": 18.56,
+      "above_50_ema": 23.48,
+      "above_200_ema": 32.81,
+      "large_cap_adv_pct": 5.1,
+      "mid_cap_adv_pct": 7.53,
+      "small_cap_adv_pct": 10.29,
+      "near_10pct_52w_high": 550,
+      "near_10pct_52w_high_pct": 18.66,
+      "india_vix": 15.28,
+      "breakout_follow_through_pct": 55.28,
+      "sector_40d_returns": {
+        "Automobile": -16.79,
+        "Financials": -1.87,
+        "Consumer": -11.64,
+        "Information Technology": -12.84,
+        "Media": -1.18,
+        "Materials": -9.39,
+        "Healthcare": -6.11,
+        "Realty": -10.4,
+        "Telecom": 4.89,
+        "Services": -4.57
+      },
       "sector_27pct_return_penetration": {
         "Automobile": 2.63,
-        "Consumer": 2.74,
+        "Consumer": 5.48,
         "Energy": 0.0,
         "Financials": 1.98,
         "Healthcare": 0.0,
-        "Industrials": 0.0,
-        "Information Technology": 9.52,
+        "Industrials": 4.17,
+        "Information Technology": 11.29,
         "Materials": 0.0,
         "Media": 0.0,
         "Realty": 0.0,
         "Services": 7.14,
         "Telecom": 0.0,
         "Textiles": 20.0,
-        "Utilities": 0.0
+        "Utilities": 5.88
       },
       "sector_55d_high_penetration": {
         "Automobile": 2.63,
-        "Consumer": 6.85,
-        "Energy": 17.65,
-        "Financials": 10.89,
-        "Healthcare": 35.42,
+        "Consumer": 8.22,
+        "Energy": 23.53,
+        "Financials": 11.88,
+        "Healthcare": 31.25,
         "Industrials": 8.33,
-        "Information Technology": 19.05,
-        "Materials": 4.55,
+        "Information Technology": 17.46,
+        "Materials": 2.27,
         "Media": 40.0,
-        "Realty": 0.0,
+        "Realty": 9.09,
         "Services": 14.29,
         "Telecom": 0.0,
         "Textiles": 20.0,
@@ -1492,66 +1492,66 @@
     }
   ],
   "latest": {
-    "session_date": "2026-10-07",
-    "advances": 1367,
-    "declines": 1524,
-    "unchanged": 43,
-    "ad_ratio": 0.897,
-    "trin": 0.4105,
-    "up_4_5": 163,
-    "down_4_5": 62,
-    "up20_5d": 43,
-    "universe": 2941,
-    "ema_universe": 2941,
-    "above_20_ema": 31.18,
-    "above_50_ema": 31.32,
-    "above_200_ema": 37.78,
-    "large_cap_adv_pct": 24.49,
-    "mid_cap_adv_pct": 29.45,
-    "small_cap_adv_pct": 38.27,
-    "near_10pct_52w_high": 714,
-    "near_10pct_52w_high_pct": 24.28,
-    "india_vix": 13.89,
-    "breakout_follow_through_pct": 57.6,
+    "session_date": "2026-10-08",
+    "advances": 461,
+    "declines": 2444,
+    "unchanged": 31,
+    "ad_ratio": 0.1886,
+    "trin": 0.2505,
+    "up_4_5": 50,
+    "down_4_5": 382,
+    "up20_5d": 27,
+    "universe": 2947,
+    "ema_universe": 2947,
+    "above_20_ema": 18.56,
+    "above_50_ema": 23.48,
+    "above_200_ema": 32.81,
+    "large_cap_adv_pct": 5.1,
+    "mid_cap_adv_pct": 7.53,
+    "small_cap_adv_pct": 10.29,
+    "near_10pct_52w_high": 550,
+    "near_10pct_52w_high_pct": 18.66,
+    "india_vix": 15.28,
+    "breakout_follow_through_pct": 55.28,
     "sector_40d_returns": {
-      "Automobile": -15.13,
-      "Financials": -1.52,
-      "Consumer": -9.71,
-      "Information Technology": -12.25,
-      "Media": 1.22,
-      "Materials": -6.96,
-      "Healthcare": -3.55,
-      "Realty": -8.39,
-      "Telecom": 6.67,
-      "Services": -1.12
+      "Automobile": -16.79,
+      "Financials": -1.87,
+      "Consumer": -11.64,
+      "Information Technology": -12.84,
+      "Media": -1.18,
+      "Materials": -9.39,
+      "Healthcare": -6.11,
+      "Realty": -10.4,
+      "Telecom": 4.89,
+      "Services": -4.57
     },
     "sector_27pct_return_penetration": {
       "Automobile": 2.63,
-      "Consumer": 2.74,
+      "Consumer": 5.48,
       "Energy": 0.0,
       "Financials": 1.98,
       "Healthcare": 0.0,
-      "Industrials": 0.0,
-      "Information Technology": 9.52,
+      "Industrials": 4.17,
+      "Information Technology": 11.29,
       "Materials": 0.0,
       "Media": 0.0,
       "Realty": 0.0,
       "Services": 7.14,
       "Telecom": 0.0,
       "Textiles": 20.0,
-      "Utilities": 0.0
+      "Utilities": 5.88
     },
     "sector_55d_high_penetration": {
       "Automobile": 2.63,
-      "Consumer": 6.85,
-      "Energy": 17.65,
-      "Financials": 10.89,
-      "Healthcare": 35.42,
+      "Consumer": 8.22,
+      "Energy": 23.53,
+      "Financials": 11.88,
+      "Healthcare": 31.25,
       "Industrials": 8.33,
-      "Information Technology": 19.05,
-      "Materials": 4.55,
+      "Information Technology": 17.46,
+      "Materials": 2.27,
       "Media": 40.0,
-      "Realty": 0.0,
+      "Realty": 9.09,
       "Services": 14.29,
       "Telecom": 0.0,
       "Textiles": 20.0,
@@ -1562,502 +1562,502 @@
   "high_rvol_stocks": [
     {
       "symbol": "DPWIRES",
-      "weekly_rvol_pct": 7867.74,
-      "rvol_20sma_volume": 7995.2,
-      "rvol_5sma_volume": 629041.2,
-      "last_40d_return_pct": 36.27,
-      "current_price": 227.46,
-      "market_cap_cr": 352.57,
-      "sector": "Other"
-    },
-    {
-      "symbol": "RITES",
-      "weekly_rvol_pct": 4360.97,
-      "rvol_20sma_volume": 340032.25,
-      "rvol_5sma_volume": 14828701.4,
-      "last_40d_return_pct": -11.44,
-      "current_price": 200.74,
-      "market_cap_cr": 9647.64,
-      "sector": "Industrials"
-    },
-    {
-      "symbol": "BNAGROCHEM",
-      "weekly_rvol_pct": 3459.75,
-      "rvol_20sma_volume": 4149.2,
-      "rvol_5sma_volume": 143551.8,
-      "last_40d_return_pct": -18.8,
-      "current_price": 215.21,
-      "market_cap_cr": 2104.17,
+      "weekly_rvol_pct": 8121.3,
+      "rvol_20sma_volume": 8201.2,
+      "rvol_5sma_volume": 666044.2,
+      "last_40d_return_pct": 29.29,
+      "current_price": 215.64,
+      "market_cap_cr": 334.25,
       "sector": "Other"
     },
     {
       "symbol": "PIXTRANS",
-      "weekly_rvol_pct": 3181.73,
-      "rvol_20sma_volume": 9975.95,
-      "rvol_5sma_volume": 317408.0,
-      "last_40d_return_pct": -9.81,
-      "current_price": 1788.4,
-      "market_cap_cr": 2436.73,
+      "weekly_rvol_pct": 3272.54,
+      "rvol_20sma_volume": 9759.05,
+      "rvol_5sma_volume": 319369.2,
+      "last_40d_return_pct": -9.86,
+      "current_price": 1755.1,
+      "market_cap_cr": 2391.36,
       "sector": "Other"
     },
     {
-      "symbol": "TVSELECT",
-      "weekly_rvol_pct": 2336.57,
-      "rvol_20sma_volume": 27078.6,
-      "rvol_5sma_volume": 632709.2,
-      "last_40d_return_pct": -13.57,
-      "current_price": 397.0,
-      "market_cap_cr": 740.42,
-      "sector": "Other"
-    },
-    {
-      "symbol": "CELLO",
-      "weekly_rvol_pct": 1947.68,
-      "rvol_20sma_volume": 331180.25,
-      "rvol_5sma_volume": 6450321.6,
-      "last_40d_return_pct": 3.18,
-      "current_price": 390.65,
-      "market_cap_cr": 8810.65,
-      "sector": "Other"
-    },
-    {
-      "symbol": "ESTER",
-      "weekly_rvol_pct": 1839.95,
-      "rvol_20sma_volume": 51818.25,
-      "rvol_5sma_volume": 953428.2,
-      "last_40d_return_pct": -9.52,
-      "current_price": 94.55,
-      "market_cap_cr": 986.11,
-      "sector": "Other"
-    },
-    {
-      "symbol": "TARIL",
-      "weekly_rvol_pct": 1752.87,
-      "rvol_20sma_volume": 876481.4,
-      "rvol_5sma_volume": 15363549.6,
-      "last_40d_return_pct": -2.68,
-      "current_price": 289.15,
-      "market_cap_cr": 8679.3,
-      "sector": "Information Technology"
-    },
-    {
-      "symbol": "GKSL",
-      "weekly_rvol_pct": 1576.23,
-      "rvol_20sma_volume": 576532.2,
-      "rvol_5sma_volume": 9087473.4,
-      "last_40d_return_pct": 39.85,
-      "current_price": 187.12,
-      "market_cap_cr": 1475.31,
-      "sector": "Other"
-    },
-    {
-      "symbol": "LOKESHMACH",
-      "weekly_rvol_pct": 1566.02,
-      "rvol_20sma_volume": 45291.85,
-      "rvol_5sma_volume": 709280.8,
-      "last_40d_return_pct": 31.48,
-      "current_price": 465.45,
-      "market_cap_cr": 1014.53,
-      "sector": "Other"
-    },
-    {
-      "symbol": "INDOAMIN",
-      "weekly_rvol_pct": 1537.07,
-      "rvol_20sma_volume": 131595.9,
-      "rvol_5sma_volume": 2022725.2,
-      "last_40d_return_pct": 20.28,
-      "current_price": 157.97,
-      "market_cap_cr": 1146.67,
-      "sector": "Other"
-    },
-    {
-      "symbol": "DHANBANK",
-      "weekly_rvol_pct": 1437.87,
-      "rvol_20sma_volume": 408829.5,
-      "rvol_5sma_volume": 5878443.4,
-      "last_40d_return_pct": 0.31,
-      "current_price": 32.83,
-      "market_cap_cr": 1295.8,
-      "sector": "Other"
-    },
-    {
-      "symbol": "MTNL",
-      "weekly_rvol_pct": 1423.67,
-      "rvol_20sma_volume": 701245.8,
-      "rvol_5sma_volume": 9983411.2,
-      "last_40d_return_pct": -13.96,
-      "current_price": 23.55,
-      "market_cap_cr": 1483.65,
-      "sector": "Other"
-    },
-    {
-      "symbol": "PRADPME",
-      "weekly_rvol_pct": 1391.27,
-      "rvol_20sma_volume": 9431.1,
-      "rvol_5sma_volume": 131212.4,
-      "last_40d_return_pct": 20.12,
-      "current_price": 620.9,
-      "market_cap_cr": 1072.29,
-      "sector": "Other"
-    },
-    {
-      "symbol": "5PAISA",
-      "weekly_rvol_pct": 1268.65,
-      "rvol_20sma_volume": 39026.4,
-      "rvol_5sma_volume": 495109.0,
-      "last_40d_return_pct": -7.78,
-      "current_price": 348.0,
-      "market_cap_cr": 1631.5,
-      "sector": "Other"
-    },
-    {
-      "symbol": "IRCON",
-      "weekly_rvol_pct": 1227.55,
-      "rvol_20sma_volume": 1733755.45,
-      "rvol_5sma_volume": 21282781.2,
-      "last_40d_return_pct": -16.76,
-      "current_price": 106.66,
-      "market_cap_cr": 10031.54,
-      "sector": "Industrials"
-    },
-    {
-      "symbol": "PASHUPATI",
-      "weekly_rvol_pct": 1198.41,
-      "rvol_20sma_volume": 149416.6,
-      "rvol_5sma_volume": 1790625.2,
-      "last_40d_return_pct": -17.29,
-      "current_price": 69.6,
-      "market_cap_cr": 1098.57,
-      "sector": "Other"
-    },
-    {
-      "symbol": "ALKYLAMINE",
-      "weekly_rvol_pct": 1191.42,
-      "rvol_20sma_volume": 57566.35,
-      "rvol_5sma_volume": 685854.2,
-      "last_40d_return_pct": -1.46,
-      "current_price": 1918.9,
-      "market_cap_cr": 9814.83,
-      "sector": "Other"
-    },
-    {
-      "symbol": "ALICON",
-      "weekly_rvol_pct": 1178.4,
-      "rvol_20sma_volume": 35786.4,
-      "rvol_5sma_volume": 421708.2,
-      "last_40d_return_pct": 23.73,
-      "current_price": 901.4,
-      "market_cap_cr": 1479.36,
-      "sector": "Other"
-    },
-    {
-      "symbol": "MBEL",
-      "weekly_rvol_pct": 1060.77,
-      "rvol_20sma_volume": 141193.95,
-      "rvol_5sma_volume": 1497745.6,
-      "last_40d_return_pct": 8.8,
-      "current_price": 290.6,
-      "market_cap_cr": 1661.09,
-      "sector": "Other"
-    },
-    {
-      "symbol": "AMNPLST",
-      "weekly_rvol_pct": 1060.09,
-      "rvol_20sma_volume": 9105.25,
-      "rvol_5sma_volume": 96523.8,
-      "last_40d_return_pct": -13.44,
-      "current_price": 172.6,
-      "market_cap_cr": 949.65,
-      "sector": "Other"
-    },
-    {
-      "symbol": "NELCAST",
-      "weekly_rvol_pct": 997.81,
-      "rvol_20sma_volume": 155613.8,
-      "rvol_5sma_volume": 1552727.8,
-      "last_40d_return_pct": 19.96,
-      "current_price": 146.29,
-      "market_cap_cr": 1272.74,
-      "sector": "Other"
-    },
-    {
-      "symbol": "ESSARSHPNG",
-      "weekly_rvol_pct": 984.8,
-      "rvol_20sma_volume": 189459.65,
-      "rvol_5sma_volume": 1865802.8,
-      "last_40d_return_pct": -15.47,
-      "current_price": 16.66,
-      "market_cap_cr": 344.82,
-      "sector": "Other"
-    },
-    {
-      "symbol": "DELTACORP",
-      "weekly_rvol_pct": 969.15,
-      "rvol_20sma_volume": 6115665.4,
-      "rvol_5sma_volume": 59269998.8,
-      "last_40d_return_pct": 30.19,
-      "current_price": 82.37,
-      "market_cap_cr": 2205.63,
-      "sector": "Other"
-    },
-    {
-      "symbol": "DPABHUSHAN",
-      "weekly_rvol_pct": 965.51,
-      "rvol_20sma_volume": 70626.3,
-      "rvol_5sma_volume": 681905.0,
-      "last_40d_return_pct": 54.25,
-      "current_price": 2262.7,
-      "market_cap_cr": 5165.27,
-      "sector": "Other"
-    },
-    {
-      "symbol": "VESUVIUS",
-      "weekly_rvol_pct": 921.45,
-      "rvol_20sma_volume": 200236.8,
-      "rvol_5sma_volume": 1845080.8,
-      "last_40d_return_pct": -10.38,
-      "current_price": 409.7,
-      "market_cap_cr": 8315.3,
-      "sector": "Other"
-    },
-    {
-      "symbol": "KRISHNADEF",
-      "weekly_rvol_pct": 904.67,
-      "rvol_20sma_volume": 76720.95,
-      "rvol_5sma_volume": 694070.0,
-      "last_40d_return_pct": 6.97,
-      "current_price": 1242.1,
-      "market_cap_cr": 1856.66,
-      "sector": "Other"
-    },
-    {
-      "symbol": "JWL",
-      "weekly_rvol_pct": 900.9,
-      "rvol_20sma_volume": 647569.9,
-      "rvol_5sma_volume": 5833989.0,
-      "last_40d_return_pct": -14.8,
-      "current_price": 223.56,
-      "market_cap_cr": 9554.29,
-      "sector": "Information Technology"
-    },
-    {
-      "symbol": "DMCC",
-      "weekly_rvol_pct": 857.85,
-      "rvol_20sma_volume": 92813.35,
-      "rvol_5sma_volume": 796200.0,
-      "last_40d_return_pct": 17.84,
-      "current_price": 356.05,
-      "market_cap_cr": 887.99,
-      "sector": "Other"
-    },
-    {
-      "symbol": "KILITCH",
-      "weekly_rvol_pct": 826.24,
-      "rvol_20sma_volume": 27744.5,
-      "rvol_5sma_volume": 229234.8,
-      "last_40d_return_pct": 33.84,
-      "current_price": 256.25,
-      "market_cap_cr": 895.89,
-      "sector": "Other"
-    },
-    {
-      "symbol": "GYFTR",
-      "weekly_rvol_pct": 796.26,
-      "rvol_20sma_volume": 68073.5,
-      "rvol_5sma_volume": 542043.8,
-      "last_40d_return_pct": 5.73,
-      "current_price": 169.52,
-      "market_cap_cr": 1302.05,
-      "sector": "Other"
-    },
-    {
-      "symbol": "FAIRCHEMOR",
-      "weekly_rvol_pct": 769.8,
-      "rvol_20sma_volume": 8902.25,
-      "rvol_5sma_volume": 68529.6,
-      "last_40d_return_pct": -5.55,
-      "current_price": 703.85,
-      "market_cap_cr": 886.56,
-      "sector": "Other"
-    },
-    {
-      "symbol": "SUNTV",
-      "weekly_rvol_pct": 755.8,
-      "rvol_20sma_volume": 1271310.3,
-      "rvol_5sma_volume": 9608555.4,
-      "last_40d_return_pct": 31.59,
-      "current_price": 636.5,
-      "market_cap_cr": 25083.49,
-      "sector": "Media"
-    },
-    {
-      "symbol": "SATIN",
-      "weekly_rvol_pct": 754.59,
-      "rvol_20sma_volume": 210204.35,
-      "rvol_5sma_volume": 1586181.8,
-      "last_40d_return_pct": -0.56,
-      "current_price": 223.79,
-      "market_cap_cr": 2472.23,
-      "sector": "Other"
-    },
-    {
-      "symbol": "MOBIKWIK",
-      "weekly_rvol_pct": 733.55,
-      "rvol_20sma_volume": 3716821.05,
-      "rvol_5sma_volume": 27264887.0,
-      "last_40d_return_pct": 20.68,
-      "current_price": 256.08,
-      "market_cap_cr": 2016.55,
-      "sector": "Other"
-    },
-    {
-      "symbol": "KSB",
-      "weekly_rvol_pct": 731.53,
-      "rvol_20sma_volume": 164016.7,
-      "rvol_5sma_volume": 1199830.2,
-      "last_40d_return_pct": -1.27,
-      "current_price": 801.5,
-      "market_cap_cr": 13949.24,
-      "sector": "Other"
-    },
-    {
-      "symbol": "ACCELYA",
-      "weekly_rvol_pct": 719.87,
-      "rvol_20sma_volume": 5814.4,
-      "rvol_5sma_volume": 41856.4,
-      "last_40d_return_pct": -4.06,
-      "current_price": 1100.1,
-      "market_cap_cr": 1642.04,
-      "sector": "Other"
-    },
-    {
-      "symbol": "HITECHCORP",
-      "weekly_rvol_pct": 716.44,
-      "rvol_20sma_volume": 7621.9,
-      "rvol_5sma_volume": 54606.2,
-      "last_40d_return_pct": 8.03,
-      "current_price": 349.1,
-      "market_cap_cr": 599.6,
-      "sector": "Other"
-    },
-    {
-      "symbol": "ULTRAMAR",
-      "weekly_rvol_pct": 697.48,
-      "rvol_20sma_volume": 54379.85,
-      "rvol_5sma_volume": 379291.2,
-      "last_40d_return_pct": 5.54,
-      "current_price": 409.6,
-      "market_cap_cr": 1196.03,
+      "symbol": "FINOPB",
+      "weekly_rvol_pct": 2835.81,
+      "rvol_20sma_volume": 190817.05,
+      "rvol_5sma_volume": 5411208.4,
+      "last_40d_return_pct": -9.3,
+      "current_price": 145.53,
+      "market_cap_cr": 1211.08,
       "sector": "Other"
     },
     {
       "symbol": "PNGSREVA",
-      "weekly_rvol_pct": 680.39,
-      "rvol_20sma_volume": 161441.15,
-      "rvol_5sma_volume": 1098433.2,
-      "last_40d_return_pct": 12.6,
-      "current_price": 631.0,
-      "market_cap_cr": 2000.17,
+      "weekly_rvol_pct": 2611.14,
+      "rvol_20sma_volume": 155658.45,
+      "rvol_5sma_volume": 4064463.4,
+      "last_40d_return_pct": 13.08,
+      "current_price": 701.95,
+      "market_cap_cr": 2225.07,
       "sector": "Other"
     },
     {
-      "symbol": "V2RETAIL",
-      "weekly_rvol_pct": 661.15,
-      "rvol_20sma_volume": 889798.55,
-      "rvol_5sma_volume": 5882875.0,
-      "last_40d_return_pct": -26.91,
-      "current_price": 163.95,
-      "market_cap_cr": 5978.23,
+      "symbol": "CELLO",
+      "weekly_rvol_pct": 2058.53,
+      "rvol_20sma_volume": 329803.95,
+      "rvol_5sma_volume": 6789120.0,
+      "last_40d_return_pct": 0.21,
+      "current_price": 375.7,
+      "market_cap_cr": 8473.47,
       "sector": "Other"
     },
     {
-      "symbol": "MUNJALAU",
-      "weekly_rvol_pct": 654.62,
-      "rvol_20sma_volume": 348736.9,
-      "rvol_5sma_volume": 2282916.8,
-      "last_40d_return_pct": 3.35,
-      "current_price": 105.44,
-      "market_cap_cr": 1054.4,
+      "symbol": "INDOKEM",
+      "weekly_rvol_pct": 1819.41,
+      "rvol_20sma_volume": 6607.85,
+      "rvol_5sma_volume": 120223.8,
+      "last_40d_return_pct": null,
+      "current_price": 692.8,
+      "market_cap_cr": 1932.1,
       "sector": "Other"
     },
     {
-      "symbol": "VOEPL",
-      "weekly_rvol_pct": 638.32,
-      "rvol_20sma_volume": 75837.25,
-      "rvol_5sma_volume": 484081.2,
-      "last_40d_return_pct": 7.31,
-      "current_price": 526.9,
-      "market_cap_cr": 1677.28,
+      "symbol": "TARIL",
+      "weekly_rvol_pct": 1788.11,
+      "rvol_20sma_volume": 866066.1,
+      "rvol_5sma_volume": 15486248.8,
+      "last_40d_return_pct": -3.32,
+      "current_price": 282.75,
+      "market_cap_cr": 8487.19,
+      "sector": "Information Technology"
+    },
+    {
+      "symbol": "DHANBANK",
+      "weekly_rvol_pct": 1671.35,
+      "rvol_20sma_volume": 419840.95,
+      "rvol_5sma_volume": 7017000.0,
+      "last_40d_return_pct": 0.46,
+      "current_price": 32.65,
+      "market_cap_cr": 1288.69,
       "sector": "Other"
     },
     {
-      "symbol": "SGFIN",
-      "weekly_rvol_pct": 638.05,
-      "rvol_20sma_volume": 164705.45,
-      "rvol_5sma_volume": 1050895.0,
-      "last_40d_return_pct": 0.53,
-      "current_price": 663.7,
-      "market_cap_cr": 4373.45,
+      "symbol": "LOKESHMACH",
+      "weekly_rvol_pct": 1627.22,
+      "rvol_20sma_volume": 47860.2,
+      "rvol_5sma_volume": 778790.4,
+      "last_40d_return_pct": 28.51,
+      "current_price": 447.85,
+      "market_cap_cr": 976.17,
       "sector": "Other"
     },
     {
-      "symbol": "FAZE3Q",
-      "weekly_rvol_pct": 628.16,
-      "rvol_20sma_volume": 16392.75,
-      "rvol_5sma_volume": 102972.8,
-      "last_40d_return_pct": -25.4,
-      "current_price": 450.1,
-      "market_cap_cr": 1107.15,
+      "symbol": "GKSL",
+      "weekly_rvol_pct": 1621.94,
+      "rvol_20sma_volume": 562529.7,
+      "rvol_5sma_volume": 9123872.0,
+      "last_40d_return_pct": 35.71,
+      "current_price": 180.71,
+      "market_cap_cr": 1424.78,
+      "sector": "Other"
+    },
+    {
+      "symbol": "BNAGROCHEM",
+      "weekly_rvol_pct": 1577.97,
+      "rvol_20sma_volume": 8054.05,
+      "rvol_5sma_volume": 127090.4,
+      "last_40d_return_pct": -21.88,
+      "current_price": 199.39,
+      "market_cap_cr": 1949.49,
+      "sector": "Other"
+    },
+    {
+      "symbol": "INDOAMIN",
+      "weekly_rvol_pct": 1486.17,
+      "rvol_20sma_volume": 140182.25,
+      "rvol_5sma_volume": 2083351.2,
+      "last_40d_return_pct": 13.94,
+      "current_price": 151.7,
+      "market_cap_cr": 1101.15,
+      "sector": "Other"
+    },
+    {
+      "symbol": "MTNL",
+      "weekly_rvol_pct": 1454.18,
+      "rvol_20sma_volume": 700151.65,
+      "rvol_5sma_volume": 10181497.8,
+      "last_40d_return_pct": -15.49,
+      "current_price": 22.81,
+      "market_cap_cr": 1437.03,
+      "sector": "Other"
+    },
+    {
+      "symbol": "GKWLIMITED",
+      "weekly_rvol_pct": 1415.19,
+      "rvol_20sma_volume": 533.75,
+      "rvol_5sma_volume": 7553.6,
+      "last_40d_return_pct": -4.64,
+      "current_price": 1562.3,
+      "market_cap_cr": 932.15,
+      "sector": "Other"
+    },
+    {
+      "symbol": "PRADPME",
+      "weekly_rvol_pct": 1392.32,
+      "rvol_20sma_volume": 9998.2,
+      "rvol_5sma_volume": 139207.4,
+      "last_40d_return_pct": 15.97,
+      "current_price": 587.75,
+      "market_cap_cr": 1015.04,
+      "sector": "Other"
+    },
+    {
+      "symbol": "ALKYLAMINE",
+      "weekly_rvol_pct": 1334.47,
+      "rvol_20sma_volume": 52201.15,
+      "rvol_5sma_volume": 696610.4,
+      "last_40d_return_pct": -3.31,
+      "current_price": 1827.3,
+      "market_cap_cr": 9346.31,
+      "sector": "Other"
+    },
+    {
+      "symbol": "5PAISA",
+      "weekly_rvol_pct": 1290.03,
+      "rvol_20sma_volume": 38671.0,
+      "rvol_5sma_volume": 498869.2,
+      "last_40d_return_pct": -12.62,
+      "current_price": 338.2,
+      "market_cap_cr": 1585.56,
+      "sector": "Other"
+    },
+    {
+      "symbol": "SENCO",
+      "weekly_rvol_pct": 1287.51,
+      "rvol_20sma_volume": 802188.1,
+      "rvol_5sma_volume": 10328285.6,
+      "last_40d_return_pct": -2.47,
+      "current_price": 337.1,
+      "market_cap_cr": 5525.1,
+      "sector": "Other"
+    },
+    {
+      "symbol": "MBEL",
+      "weekly_rvol_pct": 1203.77,
+      "rvol_20sma_volume": 139502.05,
+      "rvol_5sma_volume": 1679277.6,
+      "last_40d_return_pct": -0.93,
+      "current_price": 265.56,
+      "market_cap_cr": 1517.96,
+      "sector": "Other"
+    },
+    {
+      "symbol": "MMWL",
+      "weekly_rvol_pct": 1165.84,
+      "rvol_20sma_volume": 36651.0,
+      "rvol_5sma_volume": 427292.4,
+      "last_40d_return_pct": 29.72,
+      "current_price": 19.77,
+      "market_cap_cr": 2239.43,
+      "sector": "Other"
+    },
+    {
+      "symbol": "AMNPLST",
+      "weekly_rvol_pct": 1109.93,
+      "rvol_20sma_volume": 8943.55,
+      "rvol_5sma_volume": 99267.2,
+      "last_40d_return_pct": -16.9,
+      "current_price": 165.87,
+      "market_cap_cr": 912.62,
+      "sector": "Other"
+    },
+    {
+      "symbol": "NELCAST",
+      "weekly_rvol_pct": 1085.78,
+      "rvol_20sma_volume": 171597.5,
+      "rvol_5sma_volume": 1863166.2,
+      "last_40d_return_pct": 18.23,
+      "current_price": 141.52,
+      "market_cap_cr": 1231.24,
+      "sector": "Other"
+    },
+    {
+      "symbol": "PANACHE",
+      "weekly_rvol_pct": 986.26,
+      "rvol_20sma_volume": 6442.85,
+      "rvol_5sma_volume": 63543.0,
+      "last_40d_return_pct": 20.12,
+      "current_price": 589.25,
+      "market_cap_cr": 943.62,
       "sector": "Other"
     },
     {
       "symbol": "LOTUSCHO",
-      "weekly_rvol_pct": 594.09,
-      "rvol_20sma_volume": 3969.5,
-      "rvol_5sma_volume": 23582.4,
+      "weekly_rvol_pct": 985.32,
+      "rvol_20sma_volume": 3915.4,
+      "rvol_5sma_volume": 38579.2,
       "last_40d_return_pct": null,
-      "current_price": 646.85,
-      "market_cap_cr": 830.62,
+      "current_price": 658.9,
+      "market_cap_cr": 846.1,
       "sector": "Other"
     },
     {
-      "symbol": "WANBURY",
-      "weekly_rvol_pct": 584.64,
-      "rvol_20sma_volume": 126682.5,
-      "rvol_5sma_volume": 740631.2,
-      "last_40d_return_pct": -21.86,
-      "current_price": 198.7,
-      "market_cap_cr": 694.79,
+      "symbol": "FAIRCHEMOR",
+      "weekly_rvol_pct": 980.36,
+      "rvol_20sma_volume": 9016.4,
+      "rvol_5sma_volume": 88393.0,
+      "last_40d_return_pct": -1.29,
+      "current_price": 720.9,
+      "market_cap_cr": 908.04,
       "sector": "Other"
     },
     {
-      "symbol": "PANORAMA",
-      "weekly_rvol_pct": 547.01,
-      "rvol_20sma_volume": 739866.35,
-      "rvol_5sma_volume": 4047136.8,
-      "last_40d_return_pct": null,
-      "current_price": 66.29,
-      "market_cap_cr": 1727.09,
+      "symbol": "KRISHNADEF",
+      "weekly_rvol_pct": 940.45,
+      "rvol_20sma_volume": 76814.15,
+      "rvol_5sma_volume": 722398.2,
+      "last_40d_return_pct": 6.14,
+      "current_price": 1240.8,
+      "market_cap_cr": 1854.72,
+      "sector": "Other"
+    },
+    {
+      "symbol": "INOXGREEN",
+      "weekly_rvol_pct": 855.0,
+      "rvol_20sma_volume": 1363357.65,
+      "rvol_5sma_volume": 11656707.8,
+      "last_40d_return_pct": -38.54,
+      "current_price": 115.08,
+      "market_cap_cr": 4620.37,
+      "sector": "Other"
+    },
+    {
+      "symbol": "KILITCH",
+      "weekly_rvol_pct": 852.78,
+      "rvol_20sma_volume": 28136.2,
+      "rvol_5sma_volume": 239939.2,
+      "last_40d_return_pct": 27.77,
+      "current_price": 244.3,
+      "market_cap_cr": 854.11,
+      "sector": "Other"
+    },
+    {
+      "symbol": "MOBIKWIK",
+      "weekly_rvol_pct": 829.63,
+      "rvol_20sma_volume": 3723349.45,
+      "rvol_5sma_volume": 30889863.4,
+      "last_40d_return_pct": 18.12,
+      "current_price": 244.52,
+      "market_cap_cr": 1925.52,
+      "sector": "Other"
+    },
+    {
+      "symbol": "ACCELYA",
+      "weekly_rvol_pct": 818.04,
+      "rvol_20sma_volume": 6000.4,
+      "rvol_5sma_volume": 49085.4,
+      "last_40d_return_pct": -4.19,
+      "current_price": 1094.4,
+      "market_cap_cr": 1633.53,
       "sector": "Other"
     },
     {
       "symbol": "HINDCOMPOS",
-      "weekly_rvol_pct": 531.32,
-      "rvol_20sma_volume": 4272.4,
-      "rvol_5sma_volume": 22700.2,
-      "last_40d_return_pct": -2.71,
-      "current_price": 403.75,
-      "market_cap_cr": 596.3,
+      "weekly_rvol_pct": 805.24,
+      "rvol_20sma_volume": 4240.05,
+      "rvol_5sma_volume": 34142.6,
+      "last_40d_return_pct": -0.88,
+      "current_price": 417.0,
+      "market_cap_cr": 615.87,
+      "sector": "Other"
+    },
+    {
+      "symbol": "GYFTR",
+      "weekly_rvol_pct": 803.67,
+      "rvol_20sma_volume": 70298.0,
+      "rvol_5sma_volume": 564963.4,
+      "last_40d_return_pct": 7.01,
+      "current_price": 171.38,
+      "market_cap_cr": 1316.34,
+      "sector": "Other"
+    },
+    {
+      "symbol": "DMCC",
+      "weekly_rvol_pct": 779.63,
+      "rvol_20sma_volume": 102152.3,
+      "rvol_5sma_volume": 796405.4,
+      "last_40d_return_pct": 12.63,
+      "current_price": 337.1,
+      "market_cap_cr": 840.73,
+      "sector": "Other"
+    },
+    {
+      "symbol": "GMBREW",
+      "weekly_rvol_pct": 736.31,
+      "rvol_20sma_volume": 40850.45,
+      "rvol_5sma_volume": 300786.6,
+      "last_40d_return_pct": -0.95,
+      "current_price": 887.45,
+      "market_cap_cr": 2027.55,
+      "sector": "Other"
+    },
+    {
+      "symbol": "V2RETAIL",
+      "weekly_rvol_pct": 731.87,
+      "rvol_20sma_volume": 906686.4,
+      "rvol_5sma_volume": 6635796.2,
+      "last_40d_return_pct": -29.55,
+      "current_price": 154.87,
+      "market_cap_cr": 5647.14,
+      "sector": "Other"
+    },
+    {
+      "symbol": "SATIN",
+      "weekly_rvol_pct": 706.92,
+      "rvol_20sma_volume": 221825.8,
+      "rvol_5sma_volume": 1568121.8,
+      "last_40d_return_pct": -2.69,
+      "current_price": 217.39,
+      "market_cap_cr": 2401.53,
+      "sector": "Other"
+    },
+    {
+      "symbol": "HITECHCORP",
+      "weekly_rvol_pct": 702.71,
+      "rvol_20sma_volume": 8679.7,
+      "rvol_5sma_volume": 60993.2,
+      "last_40d_return_pct": 7.45,
+      "current_price": 350.55,
+      "market_cap_cr": 602.09,
+      "sector": "Other"
+    },
+    {
+      "symbol": "VOEPL",
+      "weekly_rvol_pct": 676.2,
+      "rvol_20sma_volume": 75282.6,
+      "rvol_5sma_volume": 509062.0,
+      "last_40d_return_pct": 2.69,
+      "current_price": 532.6,
+      "market_cap_cr": 1695.43,
+      "sector": "Other"
+    },
+    {
+      "symbol": "ARFIN",
+      "weekly_rvol_pct": 611.94,
+      "rvol_20sma_volume": 1340641.9,
+      "rvol_5sma_volume": 8203942.8,
+      "last_40d_return_pct": 26.88,
+      "current_price": 107.52,
+      "market_cap_cr": 1814.1,
+      "sector": "Other"
+    },
+    {
+      "symbol": "SGFIN",
+      "weekly_rvol_pct": 606.58,
+      "rvol_20sma_volume": 173522.4,
+      "rvol_5sma_volume": 1052559.2,
+      "last_40d_return_pct": -0.85,
+      "current_price": 645.9,
+      "market_cap_cr": 4256.16,
+      "sector": "Other"
+    },
+    {
+      "symbol": "HTEL",
+      "weekly_rvol_pct": 584.15,
+      "rvol_20sma_volume": 2272671.15,
+      "rvol_5sma_volume": 13275751.4,
+      "last_40d_return_pct": null,
+      "current_price": 97.27,
+      "market_cap_cr": 922.63,
+      "sector": "Other"
+    },
+    {
+      "symbol": "SUPREMEINF",
+      "weekly_rvol_pct": 551.92,
+      "rvol_20sma_volume": 50469.9,
+      "rvol_5sma_volume": 278554.2,
+      "last_40d_return_pct": -40.49,
+      "current_price": 49.92,
+      "market_cap_cr": 486.73,
+      "sector": "Other"
+    },
+    {
+      "symbol": "SHRADDHA",
+      "weekly_rvol_pct": 546.56,
+      "rvol_20sma_volume": 6197.1,
+      "rvol_5sma_volume": 33870.8,
+      "last_40d_return_pct": null,
+      "current_price": 158.87,
+      "market_cap_cr": 641.85,
+      "sector": "Other"
+    },
+    {
+      "symbol": "RAJOOENG",
+      "weekly_rvol_pct": 542.37,
+      "rvol_20sma_volume": 266128.0,
+      "rvol_5sma_volume": 1443391.4,
+      "last_40d_return_pct": 18.33,
+      "current_price": 59.92,
+      "market_cap_cr": 1070.62,
       "sector": "Other"
     },
     {
       "symbol": "OMFREIGHT",
-      "weekly_rvol_pct": 512.5,
-      "rvol_20sma_volume": 7962.15,
-      "rvol_5sma_volume": 40805.8,
-      "last_40d_return_pct": 13.15,
-      "current_price": 106.63,
-      "market_cap_cr": 359.08,
+      "weekly_rvol_pct": 526.68,
+      "rvol_20sma_volume": 8495.2,
+      "rvol_5sma_volume": 44742.2,
+      "last_40d_return_pct": 11.29,
+      "current_price": 106.72,
+      "market_cap_cr": 359.38,
+      "sector": "Other"
+    },
+    {
+      "symbol": "SCI",
+      "weekly_rvol_pct": 526.3,
+      "rvol_20sma_volume": 1401015.45,
+      "rvol_5sma_volume": 7373492.2,
+      "last_40d_return_pct": -6.04,
+      "current_price": 280.75,
+      "market_cap_cr": 13077.31,
+      "sector": "Services"
+    },
+    {
+      "symbol": "DCMSHRIRAM",
+      "weekly_rvol_pct": 497.73,
+      "rvol_20sma_volume": 66363.15,
+      "rvol_5sma_volume": 330312.2,
+      "last_40d_return_pct": -3.82,
+      "current_price": 955.75,
+      "market_cap_cr": 14904.18,
+      "sector": "Other"
+    },
+    {
+      "symbol": "PANORAMA",
+      "weekly_rvol_pct": 494.24,
+      "rvol_20sma_volume": 793585.65,
+      "rvol_5sma_volume": 3922254.6,
+      "last_40d_return_pct": null,
+      "current_price": 63.65,
+      "market_cap_cr": 1658.31,
+      "sector": "Other"
+    },
+    {
+      "symbol": "RELINFRA",
+      "weekly_rvol_pct": 482.53,
+      "rvol_20sma_volume": 202193.9,
+      "rvol_5sma_volume": 975639.4,
+      "last_40d_return_pct": -19.18,
+      "current_price": 56.47,
+      "market_cap_cr": 2307.54,
+      "sector": "Other"
+    },
+    {
+      "symbol": "SHUKRAPHAR",
+      "weekly_rvol_pct": 479.42,
+      "rvol_20sma_volume": 4248982.05,
+      "rvol_5sma_volume": 20370445.0,
+      "last_40d_return_pct": null,
+      "current_price": 66.78,
+      "market_cap_cr": 2935.75,
       "sector": "Other"
     }
   ],
@@ -2068,15 +2068,23 @@
     },
     {
       "sector": "Information Technology",
-      "return_27pct_penetration": 9.52
+      "return_27pct_penetration": 11.29
     },
     {
       "sector": "Services",
       "return_27pct_penetration": 7.14
     },
     {
+      "sector": "Utilities",
+      "return_27pct_penetration": 5.88
+    },
+    {
       "sector": "Consumer",
-      "return_27pct_penetration": 2.74
+      "return_27pct_penetration": 5.48
+    },
+    {
+      "sector": "Industrials",
+      "return_27pct_penetration": 4.17
     },
     {
       "sector": "Automobile",
@@ -2095,10 +2103,6 @@
       "return_27pct_penetration": 0.0
     },
     {
-      "sector": "Industrials",
-      "return_27pct_penetration": 0.0
-    },
-    {
       "sector": "Materials",
       "return_27pct_penetration": 0.0
     },
@@ -2113,10 +2117,6 @@
     {
       "sector": "Telecom",
       "return_27pct_penetration": 0.0
-    },
-    {
-      "sector": "Utilities",
-      "return_27pct_penetration": 0.0
     }
   ],
   "sector_55d_high_ranking": [
@@ -2126,7 +2126,11 @@
     },
     {
       "sector": "Healthcare",
-      "penetration_pct": 35.42
+      "penetration_pct": 31.25
+    },
+    {
+      "sector": "Energy",
+      "penetration_pct": 23.53
     },
     {
       "sector": "Textiles",
@@ -2134,11 +2138,7 @@
     },
     {
       "sector": "Information Technology",
-      "penetration_pct": 19.05
-    },
-    {
-      "sector": "Energy",
-      "penetration_pct": 17.65
+      "penetration_pct": 17.46
     },
     {
       "sector": "Services",
@@ -2146,7 +2146,11 @@
     },
     {
       "sector": "Financials",
-      "penetration_pct": 10.89
+      "penetration_pct": 11.88
+    },
+    {
+      "sector": "Realty",
+      "penetration_pct": 9.09
     },
     {
       "sector": "Industrials",
@@ -2154,23 +2158,19 @@
     },
     {
       "sector": "Consumer",
-      "penetration_pct": 6.85
+      "penetration_pct": 8.22
     },
     {
       "sector": "Utilities",
       "penetration_pct": 5.88
     },
     {
-      "sector": "Materials",
-      "penetration_pct": 4.55
-    },
-    {
       "sector": "Automobile",
       "penetration_pct": 2.63
     },
     {
-      "sector": "Realty",
-      "penetration_pct": 0.0
+      "sector": "Materials",
+      "penetration_pct": 2.27
     },
     {
       "sector": "Telecom",
